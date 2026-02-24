@@ -1,0 +1,161 @@
+/* 10trix 텍스트 로고 */
+.logo-text {
+	font-weight: 700;
+	font-size: 1.5rem;
+	color: #fff;
+	text-decoration: none;
+	letter-spacing: -0.02em;
+}
+.logo-text:hover {
+	color: #00C4F4;
+}
+.f-logo.logo-text {
+	font-size: 1.25rem;
+}
+
+/* 로고만 폰트 크기 1.5배 (네비는 원래 14px 유지) */
+#header .menu-nav .logo .logo-text {
+	font-size: 2.25rem !important;
+}
+#header .mobile-menu .nav-logo .logo-text {
+	font-size: 2.25rem !important;
+}
+/* 네비(HOME, ABOUT, CONTACT)는 확실히 14px 고정 */
+#header .navbar-wrap .navigation li a,
+#header .menu-area .navbar-wrap > ul > li > a {
+	font-size: 14px !important;
+}
+
+/* Buy 10TRX 버튼 크기 축소 */
+#header .header-action .header-btn .btn {
+	font-size: 13px !important;
+	padding: 10px 20px !important;
+}
+
+/* 헤더 세로 폭 (적당한 높이) */
+#header .menu-area.menu-style-two {
+	padding: 22px 0 !important;
+}
+#header .menu-area.menu-style-two.sticky-menu {
+	padding: 16px 0 !important;
+}
+#header .menu-area.menu-style-two .navbar-wrap > ul > li > a {
+	padding: 22px 0 !important;
+}
+#header .menu-area.menu-style-two.sticky-menu .navbar-wrap > ul > li > a {
+	padding: 16px 0 !important;
+}
+
+/* 10trix 전용: 헤더 텍스트 링크(회원가입/로그인) */
+.header-action .header-link {
+	color: #A4B4C3;
+	text-decoration: none;
+	font-size: 15px;
+	padding: 0;
+	background: none;
+	border: none;
+}
+.header-action .header-link:hover {
+	color: #00C4F4;
+}
+
+/* 헤더: 회원가입·로그인 간격 줄이고 세로 구분선 제거 */
+.header-action > ul > li:nth-child(2) {
+	margin-left: 14px;
+	padding-left: 0;
+}
+.header-action > ul > li:nth-child(2)::before,
+.header-action > ul > li:nth-child(3)::before {
+	display: none;
+}
+.header-action > ul > li:nth-child(3) {
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+/* 10trix 전용: 히어로 절반 높이 + 비디오 배경 최적화 */
+.banner-area.banner-bg {
+	min-height: 50vh;
+	display: flex;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+}
+.banner-area.banner-bg .container {
+	width: 100%;
+	position: relative;
+	z-index: 1;
+}
+.banner-area.banner-bg .banner-content {
+	transform: translateY(-20%);
+}
+
+/* 히어로 타이틀: 10trix 텐트릭스는 3배, 차세대 크립토 토큰은 원래 크기, 줄간격 좁게 */
+.banner-area.banner-bg .banner-content .title {
+	font-size: clamp(2rem, 10vw, 165px);
+	line-height: 1.1;
+	margin-bottom: 0;
+}
+.banner-area.banner-bg .banner-content .title .title-ko {
+	font-size: 0.88em;
+}
+.banner-area.banner-bg .banner-content .title .title-sub {
+	display: block;
+	font-size: 55px;
+	color: #fff;
+	margin-top: 0.35em;
+}
+@media (max-width: 768px) {
+	.banner-area.banner-bg .banner-content .title .title-sub {
+		font-size: 28px;
+	}
+}
+
+/* 히어로 배경 비디오 (높이 절반에 맞춤) */
+.hero-bg-video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: -2;
+}
+.banner-area.banner-bg::before {
+	z-index: -1;
+}
+.banner-area.banner-bg .banner-shape-wrap {
+	position: relative;
+	z-index: 0;
+}
+
+/* 문서 섹션: 문구 크기 더 크게 + 버튼 간격 */
+.document-area .document-desc {
+	font-size: 1.5rem !important;
+	line-height: 1.65 !important;
+	margin-bottom: 2.5rem !important;
+	color: #fff;
+}
+.document-area .document-content .btn {
+	margin-top: 2rem !important;
+	display: inline-block;
+}
+
+/* 푸터 회사 정보: 2단 배치, 높이 맞춤 */
+.footer-company-info {
+	display: flex;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+}
+.footer-company-info .footer-company-col {
+	flex: 1;
+	min-width: 140px;
+}
+.footer-company-info p {
+	margin-bottom: 0.2rem;
+	font-size: 0.8rem;
+	line-height: 1.4;
+}
+@media (max-width: 576px) {
+	.footer-company-info { flex-direction: column; }
+}

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>관리자 - 10trix 텐트릭스</title>
+	<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-page">
+	<div id="admin-gate" class="admin-gate">
+		<div class="admin-gate-box">
+			<h2 class="admin-gate-title">관리자 로그인</h2>
+			<form id="admin-gate-form" class="admin-gate-form">
+				<input type="password" id="admin-gate-password" class="admin-gate-input" placeholder="비밀번호" autocomplete="off">
+				<button type="submit" class="admin-gate-btn">입장</button>
+			</form>
+			<p id="admin-gate-error" class="admin-gate-error"></p>
+		</div>
+	</div>
+	<div id="admin-content" class="admin-content-wrap" style="display: none;">
+	<aside class="admin-sidebar">
+		<div class="logo"><a href="/10trix/" class="admin-logo-text">10trix</a><span class="admin-logo-sub">관리자</span></div>
+		<nav>
+			<a href="#dashboard" class="admin-nav active" data-section="dashboard">대시보드</a>
+			<a href="#members" class="admin-nav" data-section="members">회원정보</a>
+			<a href="#forms" class="admin-nav" data-section="forms">입력폼 내용</a>
+		</nav>
+		<a href="/10trix/" class="admin-sidebar-home">홈으로 가기</a>
+	</aside>
+
+	<main class="admin-main">
+		<!-- 대시보드 -->
+		<section id="section-dashboard" class="admin-section active">
+			<h1>대시보드</h1>
+			<div class="admin-card">
+				<div class="admin-card-header">요약</div>
+				<div style="padding: 1.25rem; display: flex; gap: 1.5rem; flex-wrap: wrap;">
+					<div style="background: rgba(0,196,244,0.1); padding: 1rem 1.5rem; border-radius: 8px; min-width: 140px;">
+						<div style="font-size: 0.85rem; opacity: 0.9;">전체 회원</div>
+						<div style="font-size: 1.5rem; font-weight: 700; color: #00C4F4;" id="stat-members">0</div>
+					</div>
+					<div style="background: rgba(0,196,244,0.1); padding: 1rem 1.5rem; border-radius: 8px; min-width: 140px;">
+						<div style="font-size: 0.85rem; opacity: 0.9;">문의 접수</div>
+						<div style="font-size: 1.5rem; font-weight: 700; color: #00C4F4;" id="stat-forms">0</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 회원정보 -->
+		<section id="section-members" class="admin-section">
+			<h1>회원정보</h1>
+			<div class="admin-card">
+				<div class="admin-card-header">회원 목록</div>
+				<table class="admin-table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>이름</th>
+							<th>이메일</th>
+							<th>가입일</th>
+							<th>비고</th>
+						</tr>
+					</thead>
+					<tbody id="members-tbody">
+						<tr><td colspan="5" class="empty" id="members-empty">불러오는 중...</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- 입력폼 내용 -->
+		<section id="section-forms" class="admin-section">
+			<h1>입력폼 내용</h1>
+			<div class="admin-card">
+				<div class="admin-card-header">문의/입력폼 접수 목록</div>
+				<table class="admin-table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>이름</th>
+							<th>이메일</th>
+							<th>메시지</th>
+							<th>접수일시</th>
+						</tr>
+					</thead>
+					<tbody id="forms-tbody">
+						<tr><td colspan="5" class="empty" id="forms-empty">불러오는 중...</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+	</div>
+
+	<script>
+	(function() {
+		var STORAGE_KEY = 'admin_authenticated';
+		var GATE_PASSWORD = '@@7979';
+		var gate = document.getElementById('admin-gate');
+		var content = document.getElementById('admin-content');
+		var form = document.getElementById('admin-gate-form');
+		var input = document.getElementById('admin-gate-password');
+		var errEl = document.getElementById('admin-gate-error');
+		if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+			if (gate) gate.style.display = 'none';
+			if (content) content.style.display = '';
+			return;
+		}
+		if (gate) gate.style.display = 'flex';
+		if (content) content.style.display = 'none';
+		if (form) {
+			form.addEventListener('submit', function(e) {
+				e.preventDefault();
+				var pw = input ? input.value : '';
+				errEl.textContent = '';
+				if (pw === GATE_PASSWORD) {
+					sessionStorage.setItem(STORAGE_KEY, '1');
+					if (gate) gate.style.display = 'none';
+					if (content) content.style.display = '';
+				} else {
+					errEl.textContent = '비밀번호가 올바르지 않습니다.';
+					if (input) input.value = '';
+				}
+			});
+		}
+	})();
+	</script>
+	<script src="../firebase-config.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+	<script>
+	(function() {
+		var navLinks = document.querySelectorAll('.admin-nav');
+		var sections = document.querySelectorAll('.admin-section');
+
+		function showSection(sectionId) {
+			sections.forEach(function(s) {
+				s.classList.toggle('active', s.id === 'section-' + sectionId);
+			});
+			navLinks.forEach(function(a) {
+				a.classList.toggle('active', a.getAttribute('data-section') === sectionId);
+			});
+		}
+
+		navLinks.forEach(function(a) {
+			a.addEventListener('click', function(e) {
+				e.preventDefault();
+				showSection(a.getAttribute('data-section'));
+			});
+		});
+
+		var hash = window.location.hash.replace('#', '') || 'dashboard';
+		showSection(hash);
+		window.addEventListener('hashchange', function() {
+			showSection(window.location.hash.replace('#', '') || 'dashboard');
+		});
+	})();
+	</script>
+	<script>
+	(function() {
+		var config = typeof window.FIREBASE_CONFIG !== 'undefined' ? window.FIREBASE_CONFIG : null;
+		if (!config || !config.apiKey || config.apiKey.indexOf('YOUR_') === 0) {
+			document.getElementById('forms-empty').textContent = 'Firebase 설정 후 문의 목록이 표시됩니다.';
+			document.getElementById('members-empty').textContent = 'Firebase 설정 후 회원 목록이 표시됩니다.';
+			return;
+		}
+		try {
+			firebase.initializeApp(config);
+			var db = firebase.firestore();
+			var formsRef = db.collection('sites').doc('10trix').collection('forms');
+			var usersRef = db.collection('sites').doc('10trix').collection('users');
+			var statMembers = document.getElementById('stat-members');
+			var statForms = document.getElementById('stat-forms');
+
+			function renderForms(snap) {
+				var tbody = document.getElementById('forms-tbody');
+				var emptyRow = document.getElementById('forms-empty');
+				var emptyTr = emptyRow.closest ? emptyRow.closest('tr') : emptyRow.parentNode;
+				var docs = snap.docs;
+				if (docs.length === 0) {
+					emptyRow.textContent = '접수된 문의가 없습니다.';
+					if (emptyTr) emptyTr.style.display = '';
+					if (statForms) statForms.textContent = '0';
+					return;
+				}
+				if (emptyTr) emptyTr.style.display = 'none';
+				if (statForms) statForms.textContent = String(docs.length);
+				var MAX_MSG_PREVIEW = 40;
+				function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+				docs.forEach(function(doc, i) {
+					var d = doc.data();
+					var rawMsg = d.message || '-';
+					var fullMsgEscaped = escapeHtml(rawMsg);
+					var preview = rawMsg.length <= MAX_MSG_PREVIEW ? rawMsg : rawMsg.slice(0, MAX_MSG_PREVIEW) + '…';
+					var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString('ko-KR') : '-';
+					var tr = document.createElement('tr');
+					tr.innerHTML = '<td>' + (docs.length - i) + '</td><td>' + escapeHtml(d.name || '-') + '</td><td>' + escapeHtml(d.email || '-') + '</td><td class="admin-msg-cell" title="클릭하면 전체 내용 펼치기">' + escapeHtml(preview) + '</td><td>' + dateStr + '</td>';
+					tbody.insertBefore(tr, emptyTr);
+					var detailTr = document.createElement('tr');
+					detailTr.className = 'admin-msg-detail-row';
+					detailTr.style.display = 'none';
+					var detailTd = document.createElement('td');
+					detailTd.colSpan = 5;
+					detailTd.className = 'admin-msg-detail-cell';
+					detailTd.innerHTML = '<pre class="admin-message-body">' + fullMsgEscaped + '</pre>';
+					detailTr.appendChild(detailTd);
+					tbody.insertBefore(detailTr, emptyTr);
+				});
+				tbody.addEventListener('click', function(e) {
+					var cell = e.target.closest && e.target.closest('.admin-msg-cell');
+					if (!cell) return;
+					var dataTr = cell.closest('tr');
+					var nextTr = dataTr && dataTr.nextElementSibling;
+					if (nextTr && nextTr.classList.contains('admin-msg-detail-row')) {
+						var isHidden = nextTr.style.display === 'none';
+						nextTr.style.display = isHidden ? 'table-row' : 'none';
+						cell.setAttribute('title', isHidden ? '클릭하면 접기' : '클릭하면 전체 내용 펼치기');
+					}
+				});
+			}
+			function renderMembers(snap) {
+				var tbody = document.getElementById('members-tbody');
+				var emptyRow = document.getElementById('members-empty');
+				var emptyTr = emptyRow.closest ? emptyRow.closest('tr') : emptyRow.parentNode;
+				var docs = snap.docs;
+				if (docs.length === 0) {
+					emptyRow.textContent = '등록된 회원이 없습니다.';
+					if (emptyTr) emptyTr.style.display = '';
+					if (statMembers) statMembers.textContent = '0';
+					return;
+				}
+				if (emptyTr) emptyTr.style.display = 'none';
+				if (statMembers) statMembers.textContent = String(docs.length);
+				function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+				docs.forEach(function(doc, i) {
+					var d = doc.data();
+					var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString('ko-KR') : '-';
+					var note = d.signupType === '10shopping' ? '10쇼핑 연동' : '신규';
+					var tr = document.createElement('tr');
+					tr.innerHTML = '<td>' + (docs.length - i) + '</td><td>' + escapeHtml(d.displayName || '-') + '</td><td>' + escapeHtml(d.email || '-') + '</td><td>' + dateStr + '</td><td>' + escapeHtml(note) + '</td>';
+					tbody.insertBefore(tr, emptyTr);
+				});
+			}
+			function setFormsError(msg) {
+				document.getElementById('forms-empty').textContent = msg;
+				if (document.getElementById('forms-empty').closest) document.getElementById('forms-empty').closest('tr').style.display = '';
+			}
+			function setMembersError(msg) {
+				document.getElementById('members-empty').textContent = msg;
+				if (document.getElementById('members-empty').closest) document.getElementById('members-empty').closest('tr').style.display = '';
+			}
+
+			Promise.all([
+				formsRef.orderBy('createdAt', 'desc').get(),
+				usersRef.orderBy('createdAt', 'desc').get()
+			]).then(function(results) {
+				renderForms(results[0]);
+				renderMembers(results[1]);
+			}).catch(function(err) {
+				setFormsError('문의 목록을 불러오지 못했습니다.');
+				setMembersError('회원 목록을 불러오지 못했습니다.');
+				console.warn(err);
+			});
+		} catch (e) {
+			document.getElementById('forms-empty').textContent = 'Firebase 연동 오류.';
+			if (document.getElementById('members-empty')) document.getElementById('members-empty').textContent = 'Firebase 연동 오류.';
+			console.warn(e);
+		}
+	})();
+	</script>
+</body>
+</html>

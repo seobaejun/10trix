@@ -1,0 +1,22 @@
+// ============================================================
+// Firestore Database 규칙
+// Firebase 콘솔 > Firestore Database > 규칙 탭에 아래 전체를 붙여넣기
+// ============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 사이트별 회원: sites/{siteId}/users/{uid}
+    // 10trix → sites/10trix/users, 다른 사이트 → sites/각자ID/users
+    match /sites/{siteId}/users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    // 사이트별 입력폼(문의 등): sites/{siteId}/forms/{docId}
+    match /sites/{siteId}/forms/{docId} {
+      // 누구나 문의 생성 (문의하기 폼), 관리자 페이지에서 읽기
+      allow create, read: if true;
+      allow update, delete: if false;
+    }
+  }
+}

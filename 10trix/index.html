@@ -1,0 +1,798 @@
+<!doctype html>
+<html class="no-js" lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>10trix (텐트릭스) - Crypto & Token</title>
+        <meta name="description" content="10trix 텐트릭스 - 크립토 토큰 플랫폼">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.png">
+
+        <!-- CSS here -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/animate.min.css">
+        <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="../assets/css/mCustomScrollbar.min.css">
+        <link rel="stylesheet" href="../assets/css/odometer.css">
+        <link rel="stylesheet" href="../assets/css/slick.css">
+        <link rel="stylesheet" href="../assets/css/default.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/responsive.css">
+        <link rel="stylesheet" href="custom.css">
+        <style>
+        .footer-company-info { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-company-info .footer-company-col { flex: 1; min-width: 140px; }
+        .footer-company-info p { margin-bottom: 0.2rem; font-size: 0.8rem; line-height: 1.4; }
+        @media (max-width: 576px) { .footer-company-info { flex-direction: column; } }
+        .banner-area.banner-bg .banner-content .title .title-ko { font-size: 0.88em; }
+        /* 헤더: 회원가입·로그인 텍스트 스타일, 세로 바 제거, 간격 축소 */
+        #header .header-action .header-link {
+            color: #A4B4C3; text-decoration: none; font-size: 15px;
+            padding: 0; background: none; border: none;
+        }
+        #header .header-action .header-link:hover { color: #00C4F4; }
+        #header .header-action > ul > li:nth-child(2) { margin-left: 14px !important; padding-left: 0 !important; }
+        #header .header-action > ul > li:nth-child(2)::before,
+        #header .header-action > ul > li:nth-child(3)::before { display: none !important; }
+        #header .header-action > ul > li:nth-child(3) { margin-left: 20px !important; padding-left: 0 !important; }
+        /* 회원가입/로그인 모달 폼 스타일 */
+        .auth-modal .modal-content { background: #0a1628 !important; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .auth-modal .modal-header { border-color: rgba(255,255,255,0.1); }
+        .auth-modal .form-control { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); color: #fff; }
+        .auth-modal .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .auth-modal .form-control:focus { background: rgba(0,0,0,0.4); border-color: #00C4F4; color: #fff; box-shadow: 0 0 0 0.2rem rgba(0,196,244,0.25); }
+        .auth-modal .form-label { color: #A4B4C3; }
+        .auth-modal .btn-primary { background: #00C4F4; border-color: #00C4F4; }
+        .auth-modal .btn-primary:hover { background: #00a8d4; border-color: #00a8d4; }
+        .auth-modal .form-check-label { color: #A4B4C3; }
+        /* 네비게이션: HOME/ABOUT/CONTACT를 오른쪽(회원가입·로그인·버튼)과 같은 높이로 맞춤 */
+        #header .navbar-wrap > ul,
+        #sticky-header.sticky-menu .navbar-wrap > ul { align-items: center !important; }
+        #header .navbar-wrap > ul > li > a,
+        #sticky-header.sticky-menu .navbar-wrap > ul > li > a {
+            padding: 14px 0 8px 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+        </style>
+    </head>
+    <body class="home-01">
+
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <!-- Preloader -->
+
+        <!-- header-area -->
+        <header id="header">
+            <div id="header-fixed-height"></div>
+            <div id="sticky-header" class="menu-area menu-style-two">
+                <div class="container custom-container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                            <div class="menu-wrap">
+                                <nav class="menu-nav">
+                                    <div class="logo">
+                                        <a href="index.html" class="logo-text">10trix</a>
+                                    </div>
+                                    <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                        <ul class="navigation">
+                                            <li class="active"><a href="#header" class="section-link">Home</a></li>
+                                            <li><a href="#about" class="section-link">About</a></li>
+                                            <li><a href="#contact" class="section-link">Contact</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="header-action d-none d-md-block">
+                                        <ul>
+                                            <li id="header-signup-li"><a href="#" class="header-link" data-bs-toggle="modal" data-bs-target="#signupModal">회원가입</a></li>
+                                            <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
+                                            <li class="header-btn"><a href="#" class="btn">Buy 10TRX</a></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- Mobile Menu  -->
+                            <div class="mobile-menu">
+                                <nav class="menu-box">
+                                    <div class="close-btn"><i class="fas fa-times"></i></div>
+                                    <div class="nav-logo"><a href="index.html" class="logo-text">10trix</a>
+                                    </div>
+                                    <div class="menu-outer">
+                                        <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                                    </div>
+                                    <div class="social-links">
+                                        <ul class="clearfix">
+                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="menu-backdrop"></div>
+                            <!-- End Mobile Menu -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header-area-end -->
+
+
+        <!-- main-area -->
+        <main class="fix">
+
+            <!-- banner-area -->
+            <section class="banner-area banner-bg">
+                <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata"
+                    src="video/Bitcoin Mining Blue 2.mp4"
+                    poster="../assets/img/banner/banner_bg.jpg">
+                    <source src="video/Bitcoin Mining Blue 2.mp4" type="video/mp4">
+                </video>
+                <div class="banner-shape-wrap">
+                    <img src="../assets/img/banner/banner_shape01.png" alt="" class="img-one">
+                    <img src="../assets/img/banner/banner_shape02.png" alt="" class="img-two">
+                    <img src="../assets/img/banner/banner_shape03.png" alt="" class="img-three">
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <div class="banner-content text-center">
+                                <h2 class="title">10trix <span class="title-ko">텐트릭스</span> <span class="title-sub">차세대 크립토 토큰</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- banner-area-end -->
+
+            <!-- about-area -->
+            <section id="about" class="about-area pt-130 pb-130">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="about-img wow fadeInLeft" data-wow-delay=".2s">
+                                <img src="../assets/img/images/about_img01.png" alt="10trix">
+                                <img src="../assets/img/images/about_img02.png" alt="" class="img-two">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="about-content wow fadeInRight" data-wow-delay=".2s">
+                                <div class="section-title mb-30">
+                                    <span class="sub-title">Who we are</span>
+                                    <h2 class="title">텐트릭스 <span>10trix</span> – 쇼핑 기능을 제공하는 토큰 플랫폼</h2>
+                                </div>
+                                <p>10쇼핑게임에서 텐트릭스 10trix 코인으로 상품을 구매하실 수 있습니다.</p>
+                                <a href="https://shoppinggame.co.kr/shop/" class="btn" target="_blank" rel="noopener noreferrer">10쇼핑게임 바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- about-area-end -->
+
+            <!-- choose-area -->
+            <section class="choose-area pb-130">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-6">
+                            <div class="section-title text-center mb-50">
+                                <span class="sub-title">why Choose us</span>
+                                <h2 class="title">왜 텐트릭스 <span>10TRX</span> 토큰인가</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row choose-active">
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon01.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">간편한 모바일 결제</a></h2>
+                                    <p>언제 어디서나 10TRX 토큰을 손쉽게 거래하세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon02.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">평생 무료 거래</a></h2>
+                                    <p>낮은 수수료로 효율적인 토큰 거래를 경험하세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon03.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">신원 보호</a></h2>
+                                    <p>개인정보를 안전하게 보호하는 블록체인 기반 서비스.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon04.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">보안 및 자산 통제</a></h2>
+                                    <p>당신의 자산을 안전하게 보관하고 완전한 통제권을 갖습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon02.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">평생 무료 거래</a></h2>
+                                    <p>낮은 수수료로 효율적인 토큰 거래를 경험하세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon03.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">신원 보호</a></h2>
+                                    <p>개인정보를 안전하게 보호하는 블록체인 기반 서비스.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="choose-item">
+                                <div class="choose-icon">
+                                    <img src="../assets/img/icon/choose_icon04.svg" alt="">
+                                </div>
+                                <div class="choose-content">
+                                    <h2 class="title"><a href="#">보안 및 자산 통제</a></h2>
+                                    <p>당신의 자산을 안전하게 보관하고 완전한 통제권을 갖습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <span class="slider__label sr-only"></span>
+                    </div>
+                </div>
+            </section>
+            <!-- choose-area-end -->
+
+            <!-- area-bg -->
+            <div class="area-bg">
+
+                <!-- document-area -->
+                <section class="document-area pt-60">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 order-2 order-lg-0">
+                                <div class="document-img text-center wow fadeInUp" data-wow-delay=".2s">
+                                    <img src="../assets/img/images/document_img.png" alt="10trix Documents">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-7">
+                                <div class="document-content mt-50 wow fadeInRight" data-wow-delay=".2s">
+                                    <div class="section-title mb-35">
+                                        <span class="sub-title">Whitepaper</span>
+                                        <h2 class="title">10trix 텐트릭스</h2>
+                                    </div>
+                                    <p class="document-desc" style="font-size: 1.5rem; line-height: 1.65; margin-bottom: 2.5rem; color: #fff;">거래소에서 자유롭게 거래하고 코인으로 상품도 구매하는 10trix 텐트릭스</p>
+                                    <a href="https://coinmarketcap.com/ko/" class="btn" style="margin-top: 2rem; display: inline-block;" target="_blank" rel="noopener noreferrer">거래소 바로가기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- document-area-end -->
+
+
+            </div>
+            <!-- area-bg-end -->
+
+            <!-- contact-area -->
+            <section id="contact" class="contact-area pt-70 pb-110">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="section-title text-center mb-70">
+                                <span class="sub-title">Contact</span>
+                                <h2 class="title"><span>텐트릭스</span> 문의하기</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-info-wrap">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="contact-info-item">
+                                    <div class="icon">
+                                        <span class="icon-background"></span>
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="content">
+                                        <p>10trix@naver.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="contact-info-item">
+                                    <div class="icon">
+                                        <span class="icon-background"></span>
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="content">
+                                        <p>10trix 공식 채널</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="contact-info-item">
+                                    <div class="icon">
+                                        <span class="icon-background"></span>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="content">
+                                        <p>10trix (텐트릭스)<br> Global</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrap">
+                        <form id="contact-form" action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-grp">
+                                        <input type="text" id="contact-name" name="name" placeholder="이름" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-grp">
+                                        <input type="email" id="contact-email" name="email" placeholder="이메일" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-grp">
+                                <textarea id="contact-message" name="message" placeholder="메시지를 입력하세요" required></textarea>
+                            </div>
+                            <div class="submit-btn text-center">
+                                <button type="submit" class="btn" id="contact-submit-btn">메시지 보내기</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- contact-area-end -->
+
+        </main>
+        <!-- main-area-end -->
+
+
+        <!-- footer-area -->
+        <footer>
+            <div class="footer-area">
+                <div class="container">
+                    <div class="footer-scroll-wrap">
+                        <button class="scroll-to-target" data-target="html"><i class="fas fa-arrow-up"></i></button>
+                    </div>
+                    <div class="footer-top">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                <div class="footer-widget wow fadeInUp" data-wow-delay=".2s">
+                                    <a href="index.html" class="f-logo logo-text">10trix</a>
+                                    <div class="footer-content">
+                                        <p>10trix (텐트릭스) – 안전하고 투명한 크립토 토큰 플랫폼. 쉽고 신뢰할 수 있는 토큰 거래를 경험하세요.</p>
+                                        <ul class="footer-social">
+                                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-telegram-plane"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-5 col-sm-6">
+                                <div class="footer-widget  wow fadeInUp" data-wow-delay=".4s">
+                                    <h4 class="fw-title">바로가기</h4>
+                                    <div class="footer-link">
+                                        <ul>
+                                            <li><a href="#contact">문의하기</a></li>
+                                            <li><a href="#about">About</a></li>
+                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">이용약관</a></li>
+                                            <li><a href="/admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="footer-widget wow fadeInUp" data-wow-delay=".6s">
+                                    <h4 class="fw-title">회사 정보</h4>
+                                    <div class="footer-content footer-company-info">
+                                        <div class="footer-company-col">
+                                            <p>회사명 (주)딩펫씨큐리티</p>
+                                            <p>주소 대전시 유성구 동서대로125 국립 한밭대학교 s9동 101호</p>
+                                            <p>사업자 등록번호 768-88-03514</p>
+                                            <p>대표 송건회</p>
+                                        </div>
+                                        <div class="footer-company-col">
+                                            <p>전화 1670-4519</p>
+                                            <p>팩스 044-862-0069</p>
+                                            <p>통신판매업신고번호 제2025-대전유성-0691호</p>
+                                            <p>개인정보 보호책임자 송건회</p>
+                                            <p>부가통신사업신고번호 12345호</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <div class="copyright-text">
+                                    <p>Copyright &copy; 2025 10trix (텐트릭스). All Rights Reserved.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-none d-sm-block">
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">이용약관</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">개인정보처리방침</a></li>
+                                        <li><a href="#">Buy 10TRX</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer-area-end -->
+
+        <!-- 서비스 이용약관 모달 -->
+        <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content" style="background: #0a1628; color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="termsModalLabel">서비스 이용약관</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto; line-height: 1.7;">
+                        <p><strong>제 1조 (약관의 목적)</strong></p>
+                        <p>본 약관은 ㈜딩펫 씨큐리티(이하 "회사"라 합니다)이 제공하는 "텐트릭스 10trix" 서비스를 이용함에 있어 회사와 이용자의 권리 및 의무 등에 대한 기본적인 사항을 규정함을 목적으로 합니다.</p>
+
+                        <p><strong>제 2조 (용어의 정의)</strong></p>
+                        <p>① "텐트릭스 10trix" 서비스(이하 "서비스")란 ㈜딩펫 씨큐리티가 제공하는 서비스 관련된 일체의 부가서비스를 말합니다.</p>
+                        <p>② "텐트릭스 10trix" 서비스(이하 "서비스") 어플리케이션이란 "서비스"를 이용하기 위하여 "이용자"의 스마트폰에 설치하는 어플리케이션 등을 말합니다.</p>
+                        <p>③ "이용자"란 본 약관에 따라 "서비스"를 이용하는 자를 말합니다.</p>
+
+                        <p><strong>제 3조 (서비스의 내용)</strong></p>
+                        <p>① "이용자"가 이용할 수 있는 "서비스"의 내용은 아래와 같습니다. "서비스" 상세 내용은 "텐트릭스 10trix" 쇼핑몰에서 물건을 구매하고자 하는 구매자들을 10명을 1개 조로 나누어 조별로 추첨하여 2명에게만 물건을 구매할 수 있는 권리를 주며, 물건을 구매하지 못한 각 조의 8명에게는 물건을 구매한 구매자의 매출 중에 일정 금액을 비율에 따라 분배하는 것을 말한다.</p>
+                        <p>② "서비스"의 내용 및 범위 등은 지역 또는 국가별로 달라질 수 있습니다.</p>
+                        <p>③ "이용자"가 "서비스"에 활용하는 소프트웨어는 수시로 업데이트를 내려받아 설치할 수 있습니다. "이용자"는 "서비스" 사용의 하나로 이러한 업데이트 다운로드와 설치에 동의합니다.</p>
+                        <p>④ "이용자"가 "텐트릭스 10trix" 어플리케이션을 삭제하면 어플리케이션에 저장된 정보들이 전부 삭제될 수도 있습니다.</p>
+                        <p>⑤ "회사"가 제공하는 "서비스"의 종류 및 내용은 서비스 개시 후 최대 1년 동안 보장하며, "회사"의 내부정책 등에 따라 변경될 수 있습니다.</p>
+                        <p>⑥ "회사"는 편리한 서비스 제공을 위하여 법정대리인의 동의하에 14세 미만 앱 사용자에 대해 동의를 구하고 사용을 할 수 있습니다. 14세 미만 사용자에 대해서는 법정대리인께서 보다 주의를 기울여 주시기 바랍니다. 보호자의 부주의로 인해 발생한 문제에 대해서는 책임지지 않습니다.</p>
+
+                        <p><strong>제 4조 (서비스 개시 및 해지)</strong></p>
+                        <p>① 서비스는 "이용자"의 서비스 이용약관에 대한 동의 후 관리자가 승인하여야 이용할 수 있습니다.</p>
+                        <p>② 더 이상 서비스를 원하지 않으면 서비스 내의 마이페이지 항목, 서비스 탈퇴를 통해 서비스를 해지할 수 있습니다.</p>
+                        <p>③ 서비스 해지 시 기존 이용자 데이터는 개인정보 보호법에 따라 일정 기간 후 일괄 삭제됩니다.</p>
+
+                        <p><strong>제 5조 (책임 제한)</strong></p>
+                        <p>① "회사"는 서비스 이용에 관련하여 "회사"의 중대한 고의 또는 과실로 인하여 "이용자"에게 발생한 손해 중 직접손해(App 서비스)에 대하여만 책임을 지며, 모든 간접, 부수적, 특별 또는 결과적 손해에 대해서는 책임을 지지 않습니다.</p>
+                        <p>② 스마트폰 네트워크 불안(통신망, 인터넷망, 블루투스) 또는 통신사의 사정으로 인해 "서비스"의 메시지 알람이 지연 또는 분실될 수 있습니다. 이로 인한 "이용자"가 입는 피해에 대해서 "회사"는 책임지지 않습니다.</p>
+                        <p>④ "회사"는 이용자의 본 약관 또는 관련 법령 위반 등 이용자 본인의 귀책 사유로 인한 서비스 이용의 장애 또는 발생하는 피해에 대하여는 책임을 지지 않습니다.</p>
+                        <p>⑤ "회사"는 천재지변 또는 이에 따르는 불가항력으로 인하여 서비스를 제공할 수 없는 경우에 이용자에게 발생한 손해에 대하여 책임을 지지 않습니다.</p>
+                        <p>⑥ "회사"는 사용상의 부주의 및 패스워드의 분실, 비밀번호의 오남용 등 사용자의 직, 간접적인 물질적 피해에 대하여는 책임을 지지 않습니다.</p>
+
+                        <p><strong>제 6조 (회사의 의무)</strong></p>
+                        <p>① "회사"는 특별한 사유가 없는 한, 서비스 제공 설비를 항상 운용 가능한 상태로 유지보수하여야 하며, 안정적으로 서비스를 제공하여야 합니다.</p>
+                        <p>② "회사"는 이용자로부터 서비스를 이용하지 못하는 사실을 통지받은 경우 서비스 재개를 위해 가능한 조처를 하며, 서비스를 다시 이용할 수 있게 된 경우에도 이 사실을 이용자에게 통보합니다.</p>
+                        <p>③ "회사"는 서비스 제공과 관련하여 알고 있는 이용자의 개인정보를 본인의 승낙 없이 제3자에게 누설, 배포하지 않습니다. 다만, 관계 법령에 의한 관계기관으로부터의 요청 등 법률의 규정에 따른 적법한 절차에 의하면 그러하지 않습니다.</p>
+                        <p>④ "회사"는 개인정보 보호 방침에서 규정하고 있는 수집항목 및 이용 목적하에 이용자 정보를 수집할 수 있습니다.</p>
+                        <p>⑤ "회사"는 시스템의 유지보수 및 중대한 결함 발생으로 인해 서비스의 일시 중지가 필요하다고 판단되는 경우 이 사실을 사용자에게 사전 고지 후 서비스를 중지하며, 서비스가 재개되는 시점에서 사용자에게 다시 고지할 의무가 있습니다.</p>
+
+                        <p><strong>제 7조 (이용자의 의무)</strong></p>
+                        <p>① 이용자는 이 "텐트릭스 10trix" 서비스를 물품구매 이외의 다른 목적으로 사용해서는 안 됩니다.</p>
+                        <p>② 이용자는 이 서비스 이용을 위해 이용자의 부담으로 스마트폰 통신이 정상적으로 운영되도록 관리하여야 합니다.</p>
+                        <p>③ "서비스"를 사용하려면 "이용자"는 "서비스" 사용과 관련하여 통신에 대해 발생할 수 있는 모든 비용을 전적으로 책임집니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 개인정보처리방침 모달 -->
+        <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content" style="background: #0a1628; color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="privacyModalLabel">개인정보처리방침</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto; line-height: 1.7;">
+                        <p>㈜딩펫 씨큐리티 (이하 "회사"라 함)는 통신비밀보호법, 전기통신사업법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하고 있습니다. 회사의 개인정보취급방침은 다음과 같은 내용을 담고 있습니다.</p>
+
+                        <p><strong>1. "회사"가 수집하고 있는 이용자의 개인정보</strong></p>
+                        <p><strong>가. 수집하는 개인정보의 항목</strong></p>
+                        <p>• 필수항목: 성명, ID(이메일계정), 비밀번호 등의 정보는 "회사"의 개인정보 취급 방침에 동의하는 경우 수집됩니다.</p>
+                        <p>• 기타 추가 서비스 및 설문조사를 통해 다양한 정보 수집 및 제공에 필요시 "회사"의 개인정보 취급 방침에 동의하는 경우 추가로 수집될 수 있습니다.</p>
+                        <p>• "회사"에서는 또한 아래의 항목들에 대해서도 안정된 서비스 제공을 위해 합법적인 절차와 회원의 동의를 거쳐 추가로 수집할 수 있습니다.</p>
+                        <p>1) IP Address, 쿠키, 방문 일시, 서비스 이용 기록, 불량 이용 기록</p>
+                        <p>2) 이메일, 휴대전화 번호, 비밀번호, 로그인 ID, 나이, 성별, 이름</p>
+                        <p>3) 접속 로그, 쿠키, 접속 IP 정보</p>
+                        <p>2) 신용카드 결제 시: 카드사명, 카드번호 등</p>
+                        <p>3) 휴대전화 결제 시: 이동전화번호, 통신사, 결제승인번호 등</p>
+                        <p>4) 계좌이체로 결제 시: 은행명, 계좌번호 등</p>
+                        <p>5) 상품권 이용 시: 상품권 번호 등</p>
+                        <p><strong>나. 개인정보 수집 방법</strong></p>
+                        <p>"회사"는 다음과 같은 방법으로 개인정보를 수집하고 있습니다.</p>
+                        <p>• 홈페이지, 모바일앱, 모바일웹, 서면양식, 팩스, 전화, 상담 게시판, 이메일, 이벤트 응모</p>
+                        <p>• 협력회사로부터 공동 제휴 및 협력을 통한 정보 수집</p>
+                        <p>• 생성정보 수집 툴을 통한 정보 수집</p>
+
+                        <p><strong>2. "회사"의 개인정보의 수집 및 이용목적</strong></p>
+                        <p><strong>가.</strong> 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산 정보를 활용합니다. 컨텐츠 제공, 특정 맞춤 서비스 제공, 본인인증, 구매 및 요금 결제, 요금추심</p>
+                        <p><strong>나.</strong> 회원관리를 위한 일부 회원 정보를 활용합니다. 회원제 서비스 이용 및 인증 서비스에 따른 본인확인, 개인식별, 불량회원의 부정 이용방지와 비인가 사용방지, 가입의사 확인, 가입 및 가입횟수 제한, 분쟁 조정을 위한 기록보존, 불만처리 등 민원처리, 고지사항 전달</p>
+                        <p><strong>다.</strong> 신규 서비스 개발 및 마케팅, 광고에 활용합니다. 신규 서비스 개발 및 인증 서비스, 맞춤 서비스 제공, 통계학적 특성에 따른 서비스 제공 및 광고 게재, 이벤트 및 광고성 정보 제공 및 참여기회 제공, 접속 빈도 파악, 회원의 서비스 이용에 대한 통계, 서비스의 유효성 확인</p>
+
+                        <p><strong>3. "회사"에서 개인정보를 수집하는 방법</strong></p>
+                        <p>모든 회원이 "회사"로부터 서비스를 제공 받기 위해서는 회원님의 개인정보가 필요하며 개인정보는 회원가입 시 회원가입 양식에 사용자의 동의를 통해 수집됩니다.</p>
+
+                        <p><strong>4. 개인정보의 취급위탁</strong></p>
+                        <p>"회사"는 동의 없이 귀하의 개인정보를 외부에 위탁처리 하지 않습니다. 하지만 서비스 향상 및 안정적인 개인정보 취급을 위해서 귀하의 개인정보를 외부에 위탁하여 처리할 수 있습니다.</p>
+                        <p><strong>가.</strong> 개인정보의 처리를 위탁할 때는 미리 그 사실을 귀하에게 고지 하겠습니다.</p>
+                        <p><strong>나.</strong> 개인정보의 처리를 위탁할 때는 위탁계약 등을 통하여 서비스제공자의 개인정보보호 관련 지시 엄수, 개인정보에 관한 비밀 유지, 제3자 제공의 금지 및 사고시의 책임부담 등을 명확히 규정하고 당해 계약 내용을 서면 또는 전자적으로 보관하겠습니다.</p>
+
+                        <p><strong>5. 개인정보의 보유 및 이용기간</strong></p>
+                        <p>회원의 개인정보는 회원가입 후 서비스 이용기간이 종료되거나 회원이 계약 해지, 탈퇴 등의 사유로 이메일이나 서면을 통해 개인정보 삭제를 요구하는 경우에는 제3자의 열람과 이용이 불가능한 상태로 처리되며, '전자상거래 등에서의 소비자보호에 관한 법률' 제6조(거래기록의 보존 등)에 의하여 아래의 명시기간 동안 보관관리 합니다.</p>
+                        <p>• 가. 계약, 청약철회, 회원서비스 제공 등의 거래에 관한 기록: 5년</p>
+                        <p>• 나. 대금결제 및 재화 등의 공급에 관한 기록: 5년</p>
+                        <p>• 다. 소비자 불만 또는 분쟁처리에 관한 기록: 3년</p>
+
+                        <p><strong>6. 개인정보 파기 절차 및 방법</strong></p>
+                        <p>이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용목적이 달성되면 지체 없이 파기하며 "회사"의 개인정보 파기절차 및 방법은 다음과 같습니다.</p>
+                        <p><strong>가. 파기절차</strong> – 이용자가 회원가입 등을 위해 입력한 정보는 목적이 달성된 후 별도의 DB로 옮겨져 내부 방침 및 기타 관련 법령에 의한 정보보호 사유에 따라 일정 기간 저장된 후 파기됩니다. 동 개인정보는 법률에 의한 경우가 아니고서는 보유되는 이외의 다른 목적으로 이용되지 않습니다.</p>
+                        <p><strong>나. 파기방법</strong> – 종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다. 전자적 파일 형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제합니다.</p>
+
+                        <p><strong>7. "회사"의 이용자 개인정보 정확성을 위한 내용</strong></p>
+                        <p>"회사"는 회원이 최선의 개인정보로 상태로 유지하도록 정기적으로 갱신을 유도합니다. 일부 정보에 대해서는 "회사"에서 정기적으로 확인작업이 이루어 집니다. 이용자의 부정확한 개인정보로 인하여 사용상의 불편을 줄 수 있으므로 개인정보 관리자가 판단하기에 확연히 부정확한 개인정보를 기입한 경우에는 정확하지 않은 개인정보를 파기할 수 있습니다.</p>
+
+                        <p><strong>8. "회사"의 이용자 개인정보 안전을 위하여 서비스의 일시적 중단</strong></p>
+                        <p>"회사"는 이용자의 안전한 서비스 이용을 위해서 최선을 다하고 있습니다. 그러나, 원하지 않는 방법에 의하여 저희의 서비스가 훼손을 당하는 경우에는 이용자들의 개인정보의 보호를 위하여, 문제가 완전하게 해결될 때까지 이용자의 개인정보를 이용한 서비스를 일시 중단 할 수도 있습니다.</p>
+
+                        <p><strong>9. "회사"의 제3 자와의 정보공유 및 제공 관련</strong></p>
+                        <p>"회사"는 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제24조의2(개인정보의 제공 동의 등)에 따라 이용자의 개인정보를 규정에 의하여 고지 또는 명시한 범위를 초과하여 이용하거나 제3자에게 제공하지 않습니다. 또한 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제66조 (비밀 유지 등)에 따라 "회사"의 서비스 제공을 위하여 이용자의 개인정보를 취급하거나 취급하였던 자는 직무상 알게 된 개인정보를 타인에게 누설하거나 제공하지 않습니다.</p>
+
+                        <p><strong>10. "회사"의 이용자의 개인정보 비밀 유지를 위한 내용</strong></p>
+                        <p>"회사"는 이용자의 개인정보의 비밀을 유지하기 위하여 제3 자에게는 이용자의 동의 없이 개인정보를 유출하지 않습니다. 또한 이용자가 동의를 하였다 하더라도, 제3 자를 통하여 재유출이 될 확률이 있는 자에게는 이용자의 개인정보를 유출하지 않습니다. "회사"는 각종정부기관의 이용자 개인정보의 일방적 제공 요구에 대하여는 이용자의 개인정보를 제공하지 않습니다. 법령에 따른 정부기관이 법령에 따른 공식 절차를 완벽하게 거쳐 자료를 요구하는 경우에 한하여 이용자의 개인정보를 제공합니다. "회사"는 이용자의 개인정보를 "회사"가 정한 기본서비스 및 기타의 서비스 활동 이외에는 이용하지 않습니다.</p>
+
+                        <p><strong>11. 회원들이 자신의 개인정보를 보호하기 위해 알아야 할 사항</strong></p>
+                        <p>PC방 등 외부 장소에서 서비스를 사용하실 경우 완전히 로그아웃 하신 후 웹 브라우저의 창을 닫아 주십시오. 정상적으로 로그아웃을 하시지 않은 경우 회원님의 정보가 고스란히 남을 수 있습니다. "회사"는 개인정보보호에 최선을 다하지만 사용자 개인의 실수나 인터넷 상의 문제로 인한 일들에 대해서는 책임을 지지 않습니다.</p>
+
+                        <p><strong>12. "회사"가 인지못한 이용자의 개인정보 및 기타의 불만 사항에 관한 처리</strong></p>
+                        <p>"회사"가 인지하지 못하고 있는 이용자의 개인정보 이용 및 기타의 불만 사항에 관하여 이용자 불만 처리를 전담하는 관리자를 배정하여 지속적이고, 신속하게 이용자의 불만 사항을 처리하고, 처리한 결과에 대하여 즉시 응대합니다.</p>
+
+                        <p><strong>13. "회사"의 개인정보 취급자의 제한에 관한 내용</strong></p>
+                        <p>"회사"는 이용자의 개인정보를 취급할 권한이 있는 제한된 소수의 직원에게만 권한을 부여하고, 취급 권한을 가진 직원들에게는 개인 아이디(ID)와 비밀번호(Password)를 부여하고, 이를 수시로 변경하여 이용자의 개인정보를 보호 하는데 최선을 다합니다.</p>
+
+                        <p><strong>14. 이용자 및 법정대리인의 권리와 그 행사 방법</strong></p>
+                        <p><strong>가.</strong> 이용자 및 법정 대리인은 언제든지 등록되어 있는 자신의 개인정보를 조회하거나 수정할 수 있으며 가입해지를 요청할 수도 있습니다.</p>
+                        <p><strong>나.</strong> 회원의 개인정보 조회, 수정을 위해서는 '개인정보 변경'(또는 '회원 정보수정' 등)을, 가입 해지(동의 철회)를 위해서는 "서비스 탈퇴"를 통하여 계약 해지 및 탈퇴가 가능합니다.</p>
+                        <p><strong>다.</strong> 고객센터나 개인정보 책임자에게 서면, 전화 또는 이메일로 연락하시면 지체 없이 조치하겠습니다.</p>
+                        <p><strong>라.</strong> 이용자가 개인정보의 오류에 대한 정정을 요청하신 경우에는 정정을 완료하기 전까지 해당 개인정보를 이용 또는 제공하지 않습니다. 또한 잘못된 개인정보를 제3 자에게 이미 제공한 경우에는 정정 처리결과를 제3자에게 지체 없이 통지하여 정정이 이루어지도록 하겠습니다.</p>
+                        <p><strong>마.</strong> "회사"는 이용자 혹은 법정 대리인의 요청에 의해 해지 또는 삭제된 개인정보는 개인정보 취급방침 "5. 개인정보의 보유 및 이용기간"에 명시된 바에 따라 처리하고 그 외의 용도로 열람 또는 이용할 수 없도록 처리하고 있습니다.</p>
+
+                        <p><strong>15. 개인정보 자동 수집 장치의 설치/운영 및 거부에 관한 사항</strong></p>
+                        <p>"회사"는 이용자들에게 특화된 맞춤 서비스를 제공하기 위해서 이용자들의 정보를 저장하고 수시로 불러오는 '쿠키(cookie)'를 사용합니다. 쿠키는 웹사이트를 운영하는데 이용되는 서버(HTTP)가 이용자의 컴퓨터 브라우저에게 보내는 소량의 정보이며 이용자들의 PC 컴퓨터내의 하드디스크에 저장되기도 합니다.</p>
+                        <p><strong>가.</strong> 쿠키의 사용 목적 – 이용자들의 로그인 및 최근 접속기록을 토대로 "회사"와 유저간 상호 커뮤니케이션 시의 편리한 기능을 제공하기 위하여 활용됩니다.</p>
+                        <p><strong>나.</strong> 쿠키의 설치/운영 및 거부 – 이용자는 쿠키 설치에 대한 선택권을 가지고 있습니다. 따라서, 이용자는 웹브라우저에서 옵션을 설정함으로써 모든 쿠키를 허용하거나, 쿠키가 저장될 때마다 확인을 거치거나, 아니면 모든 쿠키의 저장을 거부할 수도 있습니다. 설정방법 예(인터넷 익스플로러의 경우): 웹 브라우저 상단의 도구 &gt; 인터넷 옵션 &gt; 개인정보. 다만, 쿠키의 저장을 거부할 경우에는 이용에 어려움이 있을 수 있습니다.</p>
+
+                        <p><strong>16. 개인정보 관리 책임자 및 담당자의 연락처</strong></p>
+                        <p>귀하께서는 "회사"의 서비스를 이용하시며 발생하는 모든 개인정보보호 관련 민원을 개인정보 관리담당자 혹은 담당 부서로 신고하실 수 있습니다. "회사"는 이용자들의 신고사항에 대해 신속하게 충분한 답변을 드릴 것입니다.</p>
+                        <p><strong>• 개인정보 관리책임자</strong></p>
+                        <p>이름: 송건회<br>직위: 관리담당자<br>전화: 042-822-4521<br>메일: ceo@shoppinggame.co.kr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 회원가입 모달 -->
+        <div class="modal fade auth-modal" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signupModalLabel">회원가입</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signup-form">
+                            <div class="mb-3">
+                                <label class="form-label d-block">가입 유형</label>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="signup-type" id="signup-type-new" value="new" checked>
+                                    <label class="form-check-label" for="signup-type-new">신규가입입니다</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="signup-type" id="signup-type-10shopping" value="10shopping">
+                                    <label class="form-check-label" for="signup-type-10shopping">10쇼핑 가입회원입니다 (10쇼핑 정보와 동일하게 입력해주세요)</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signup-name" class="form-label">이름</label>
+                                <input type="text" class="form-control" id="signup-name" placeholder="이름을 입력하세요" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signup-email" class="form-label">이메일</label>
+                                <input type="email" class="form-control" id="signup-email" placeholder="example@email.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signup-password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="signup-password" placeholder="비밀번호 (8자 이상)" required minlength="8">
+                            </div>
+                            <div class="mb-3">
+                                <label for="signup-password-confirm" class="form-label">비밀번호 확인</label>
+                                <input type="password" class="form-control" id="signup-password-confirm" placeholder="비밀번호를 다시 입력하세요" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="signup-integrated">
+                                <label class="form-check-label" for="signup-integrated">10쇼핑과 통합회원 동의</label>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="signup-terms" required>
+                                <label class="form-check-label" for="signup-terms">이용약관 및 개인정보처리방침에 동의합니다</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" id="signup-submit-btn">가입하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그인 모달 -->
+        <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">로그인</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="login-form">
+                            <div class="mb-3">
+                                <label for="login-email" class="form-label">이메일</label>
+                                <input type="email" class="form-control" id="login-email" placeholder="example@email.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="login-password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="login-password" placeholder="비밀번호" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">로그인</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Firebase (같은 프로젝트 공유, 사이트별 데이터는 sites/{siteId}/users 에 저장) -->
+        <script src="../firebase-config.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="js/firebase-auth.js"></script>
+        <!-- JS here -->
+        <script src="../assets/js/vendor/jquery-3.6.0.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/jquery.odometer.min.js"></script>
+        <script src="../assets/js/jquery.countdown.min.js"></script>
+        <script src="../assets/js/jquery.knob.min.js"></script>
+        <script src="../assets/js/jquery-countdowngampang.min.js"></script>
+        <script src="../assets/js/jquery.ba-throttle-debounce.min.js"></script>
+        <script src="../assets/js/jquery.mCustomScrollbar.min.js"></script>
+        <script src="../assets/js/jarallax.min.js"></script>
+        <script src="../assets/js/jquery.appear.js"></script>
+        <script src="../assets/js/jquery.easing.js"></script>
+        <script src="../assets/js/slick.min.js"></script>
+        <script src="../assets/js/wow.min.js"></script>
+        <script src="../assets/js/main.js"></script>
+        <script>
+        (function() {
+            var v = document.querySelector('.hero-bg-video');
+            if (!v) return;
+            v.addEventListener('error', function() {
+                v.style.display = 'none';
+            });
+            v.addEventListener('canplay', function() { v.play().catch(function(){}); });
+        })();
+        </script>
+        <!-- Firebase 미설정 시 로그인/회원가입 폼 폴백 (localStorage 데모) -->
+        <script>
+        (function() {
+            var config = typeof window.FIREBASE_CONFIG !== 'undefined' ? window.FIREBASE_CONFIG : null;
+            if (config && config.apiKey && config.apiKey.indexOf('YOUR_') !== 0) return;
+
+            var STORAGE_KEY = '10trix_logged_in';
+            var link = document.getElementById('header-auth-link');
+            var loginModalEl = document.getElementById('loginModal');
+            if (!link) return;
+            function updateAuthUI() {
+                var isLoggedIn = localStorage.getItem(STORAGE_KEY) === '1';
+                link.textContent = isLoggedIn ? '로그아웃' : '로그인';
+            }
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (localStorage.getItem(STORAGE_KEY) === '1') {
+                    localStorage.removeItem(STORAGE_KEY);
+                    link.textContent = '로그인';
+                } else {
+                    if (typeof bootstrap !== 'undefined' && loginModalEl) {
+                        bootstrap.Modal.getOrCreateInstance(loginModalEl).show();
+                    } else {
+                        localStorage.setItem(STORAGE_KEY, '1');
+                        link.textContent = '로그아웃';
+                    }
+                }
+            });
+            updateAuthUI();
+        })();
+        </script>
+        <script>
+        (function() {
+            var config = typeof window.FIREBASE_CONFIG !== 'undefined' ? window.FIREBASE_CONFIG : null;
+            if (config && config.apiKey && config.apiKey.indexOf('YOUR_') !== 0) return;
+
+            var loginForm = document.getElementById('login-form');
+            var signupForm = document.getElementById('signup-form');
+            var loginModalEl = document.getElementById('loginModal');
+            var authLink = document.getElementById('header-auth-link');
+            var STORAGE_KEY = '10trix_logged_in';
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var email = document.getElementById('login-email').value;
+                    var password = document.getElementById('login-password').value;
+                    if (!email || !password) return;
+                    localStorage.setItem(STORAGE_KEY, '1');
+                    if (loginModalEl && typeof bootstrap !== 'undefined') bootstrap.Modal.getInstance(loginModalEl).hide();
+                    if (authLink) authLink.textContent = '로그아웃';
+                    var signupLi = document.getElementById('header-signup-li');
+                    if (signupLi) signupLi.style.display = 'none';
+                    loginForm.reset();
+                });
+            }
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var pw = document.getElementById('signup-password').value;
+                    var pwConfirm = document.getElementById('signup-password-confirm').value;
+                    if (pw !== pwConfirm) { alert('비밀번호가 일치하지 않습니다.'); return; }
+                    var signupModalEl = document.getElementById('signupModal');
+                    if (signupModalEl && typeof bootstrap !== 'undefined') bootstrap.Modal.getInstance(signupModalEl).hide();
+                    alert('가입 요청이 완료되었습니다. (Firebase 설정 후 실제 가입이 동작합니다.)');
+                    signupForm.reset();
+                });
+            }
+        })();
+        </script>
+    </body>
+</html>

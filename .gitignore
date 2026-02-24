@@ -1,0 +1,7 @@
+# 환경 변수 (Firebase 키 등)
+.env
+.env.local
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
