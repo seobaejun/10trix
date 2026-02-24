@@ -37,13 +37,20 @@ git push -u origin main
   에서 해당 토큰을 **Revoke** 하고, 필요하면 새 토큰을 발급해 사용하는 것을 권장합니다.
 - 이후에는 Windows용 **Git Credential Manager** 로 자동 로그인됩니다.
 
-## 5. 이후 작업 시 (커밋 & 푸시)
+## 5. 이후 작업 시 (커밋 & 푸시) — **항상 둘 다 푸시**
+
+- **origin** → `seobaejun/10trix` (메인 저장소)
+- **site** → `seobaejun/10trix-site` (Vercel 자동 배포용)
 
 ```bash
 cd /d c:\bigtech
 git add .
 git commit -m "작업 내용 요약"
-git push
+git push origin main
+git push site main
 ```
+
+한 번에: `git push origin main; git push site main`  
+→ 10trix-site에 푸시되면 Vercel이 자동 배포합니다.
 
 `.env` 파일은 `.gitignore`에 포함되어 있어 저장소에 올라가지 않습니다.
