@@ -717,8 +717,14 @@
         <script src="../assets/js/main.js"></script>
         <script>
         (function() {
+            document.addEventListener('click', function(e) {
+                var link = e.target.closest && e.target.closest('.mobile-menu .menu-box a');
+                if (link) {
+                    document.body.classList.remove('mobile-menu-visible');
+                }
+            }, true);
             if (typeof jQuery !== 'undefined') {
-                jQuery(document).on('click', '.mobile-menu .menu-outer a', function() {
+                jQuery(document).on('click', '.mobile-menu .menu-box a', function() {
                     jQuery('body').removeClass('mobile-menu-visible');
                 });
             }

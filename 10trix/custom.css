@@ -124,12 +124,12 @@
 /* 모바일: 히어로 텍스트 위로 더 올리기 */
 @media (max-width: 991px) {
 	.banner-area.banner-bg .banner-content {
-		transform: translateY(-35%);
+		transform: translateY(-55%);
 	}
 }
 @media (max-width: 576px) {
 	.banner-area.banner-bg .banner-content {
-		transform: translateY(-42%);
+		transform: translateY(-62%);
 	}
 }
 
