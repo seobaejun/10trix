@@ -46,6 +46,16 @@
 	padding: 16px 0 !important;
 }
 
+/* 모바일: 헤더 높이 줄이기 */
+@media (max-width: 991px) {
+	#header .menu-area.menu-style-two {
+		padding: 12px 0 !important;
+	}
+	#header .menu-area.menu-style-two.sticky-menu {
+		padding: 10px 0 !important;
+	}
+}
+
 /* 10trix 전용: 헤더 텍스트 링크(회원가입/로그인) */
 .header-action .header-link {
 	color: #A4B4C3;
@@ -108,6 +118,18 @@
 @media (max-width: 768px) {
 	.banner-area.banner-bg .banner-content .title .title-sub {
 		font-size: 28px;
+	}
+}
+
+/* 모바일: 히어로 텍스트 위로 더 올리기 */
+@media (max-width: 991px) {
+	.banner-area.banner-bg .banner-content {
+		transform: translateY(-35%);
+	}
+}
+@media (max-width: 576px) {
+	.banner-area.banner-bg .banner-content {
+		transform: translateY(-42%);
 	}
 }
 

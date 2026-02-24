@@ -717,6 +717,15 @@
         <script src="../assets/js/main.js"></script>
         <script>
         (function() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery(document).on('click', '.mobile-menu .menu-outer a', function() {
+                    jQuery('body').removeClass('mobile-menu-visible');
+                });
+            }
+        })();
+        </script>
+        <script>
+        (function() {
             var v = document.querySelector('.hero-bg-video');
             if (!v) return;
             v.addEventListener('error', function() {
