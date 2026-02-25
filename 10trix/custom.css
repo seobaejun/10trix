@@ -156,11 +156,11 @@ body.page-footer-stick main {
 }
 .banner-area.banner-bg .banner-content {
 	transform: translateY(-20%);
-	/* 텍스트 뒤 살짝 어두운 배경으로 가독성 보조 */
+	/* 텍스트 뒤 살짝 어두운 배경으로 가독성 보조 (흐리게) */
 	padding: 0.5em 0.75em;
 	border-radius: 12px;
-	background: rgba(0, 0, 0, 0.45);
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+	background: rgba(0, 0, 0, 0.22);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* 히어로 타이틀: 10trix 텐트릭스는 3배, 차세대 크립토 토큰은 원래 크기, 줄간격 좁게 */
@@ -168,14 +168,14 @@ body.page-footer-stick main {
 	font-size: clamp(2rem, 10vw, 165px);
 	line-height: 1.1;
 	margin-bottom: 0;
-	/* 비디오 위에서도 잘 보이도록 텍스트 그림자 + 살짝 어두운 배경 */
+	/* 비디오 위에서도 잘 보이도록 텍스트 그림자 (약간 흐리게) */
 	text-shadow:
-		0 0 20px rgba(0, 0, 0, 1),
-		0 0 40px rgba(0, 0, 0, 0.9),
-		0 2px 4px rgba(0, 0, 0, 0.9),
-		0 4px 8px rgba(0, 0, 0, 0.7),
-		1px 1px 0 rgba(0, 0, 0, 0.8),
-		-1px -1px 0 rgba(0, 0, 0, 0.6);
+		0 0 20px rgba(0, 0, 0, 0.85),
+		0 0 40px rgba(0, 0, 0, 0.7),
+		0 2px 4px rgba(0, 0, 0, 0.7),
+		0 4px 8px rgba(0, 0, 0, 0.55),
+		1px 1px 0 rgba(0, 0, 0, 0.65),
+		-1px -1px 0 rgba(0, 0, 0, 0.5);
 }
 .banner-area.banner-bg .banner-content .title .title-ko {
 	font-size: 0.88em;
@@ -186,9 +186,9 @@ body.page-footer-stick main {
 	color: #fff;
 	margin-top: 0.35em;
 	text-shadow:
-		0 0 16px rgba(0, 0, 0, 1),
-		0 0 32px rgba(0, 0, 0, 0.9),
-		0 2px 4px rgba(0, 0, 0, 0.9);
+		0 0 16px rgba(0, 0, 0, 0.85),
+		0 0 32px rgba(0, 0, 0, 0.7),
+		0 2px 4px rgba(0, 0, 0, 0.7);
 }
 @media (max-width: 768px) {
 	.banner-area.banner-bg .banner-content .title .title-sub {
@@ -196,15 +196,15 @@ body.page-footer-stick main {
 	}
 }
 
-/* 모바일: 히어로 텍스트 위로 더 올리기 */
+/* 모바일: 히어로 텍스트 세로 중앙 */
 @media (max-width: 991px) {
 	.banner-area.banner-bg .banner-content {
-		transform: translateY(-55%);
+		transform: translateY(0);
 	}
 }
 @media (max-width: 576px) {
 	.banner-area.banner-bg .banner-content {
-		transform: translateY(-62%);
+		transform: translateY(0);
 	}
 }
 
