@@ -109,7 +109,7 @@
         }
         </style>
     </head>
-    <body class="home-01">
+    <body class="home-01 page-footer-stick">
         <!-- header-area (메인과 동일) -->
         <header id="header">
             <div id="header-fixed-height"></div>
@@ -132,10 +132,11 @@
                                     </div>
                                     <div class="header-action d-none d-md-block">
                                         <ul>
-                                            <li><a href="index.html" class="header-link">회원가입</a></li>
-                                            <li><a href="index.html" class="header-link">로그인</a></li>
-                                            <li><a href="notice.html" class="header-link">공지사항</a></li>
-                                            <li><a href="index.html#contact" class="header-link">Q&A</a></li>
+                                            <li id="header-signup-li"><a href="index.html" class="header-link">회원가입</a></li>
+                                            <li id="header-mypage-li" style="display: none;"><a href="mypage.html" class="header-link">마이페이지</a></li>
+                                            <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
+                                            <li><a href="notice.html" class="header-link" id="header-notice-link">공지사항</a></li>
+                                            <li><a href="index.html#contact" class="header-link" id="header-qna-link">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -147,10 +148,11 @@
                                     <div class="nav-logo"><a href="index.html" class="logo-text">10trix</a></div>
                                     <div class="mobile-menu-action">
                                         <ul>
-                                            <li><a href="index.html" class="header-link mobile-menu-link">회원가입</a></li>
-                                            <li><a href="index.html" class="header-link mobile-menu-link">로그인</a></li>
-                                            <li><a href="notice.html" class="header-link mobile-menu-link">공지사항</a></li>
-                                            <li><a href="index.html#contact" class="header-link mobile-menu-link">Q&A</a></li>
+                                            <li id="mobile-signup-li"><a href="index.html" class="header-link mobile-menu-link">회원가입</a></li>
+                                            <li id="mobile-mypage-li" style="display: none;"><a href="mypage.html" class="header-link mobile-menu-link">마이페이지</a></li>
+                                            <li><a href="#" class="header-link mobile-menu-link" id="mobile-auth-link">로그인</a></li>
+                                            <li><a href="notice.html" class="header-link mobile-menu-link" id="mobile-notice-link">공지사항</a></li>
+                                            <li><a href="index.html#contact" class="header-link mobile-menu-link" id="mobile-qna-link">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn mobile-menu-btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -250,7 +252,7 @@
                                             <li><a href="index.html#header">Home</a></li>
                                             <li><a href="index.html#about">About</a></li>
                                             <li><a href="index.html#contact">Contact</a></li>
-                                            <li><a href="/admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
+                                            <li><a href="../admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -302,7 +304,9 @@
 
         <script src="../firebase-config.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="js/firebase-auth.js"></script>
         <script src="../assets/js/vendor/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/bootstrap.min.js"></script>
         <script>
@@ -325,7 +329,7 @@
                 return;
             }
             try {
-                firebase.initializeApp(config);
+                if (!firebase.apps.length) firebase.initializeApp(config);
                 var db = firebase.firestore();
                 var noticesRef = db.collection('sites').doc('10trix').collection('notices');
                 noticesRef.get().then(function(snap) {

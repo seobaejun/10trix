@@ -26,16 +26,15 @@
         .footer-company-info p { margin-bottom: 0.2rem; font-size: 0.8rem; line-height: 1.4; }
         @media (max-width: 576px) { .footer-company-info { flex-direction: column; } }
         .banner-area.banner-bg .banner-content .title .title-ko { font-size: 0.88em; }
-        /* 헤더: 회원가입·로그인 텍스트 스타일, 세로 바 제거, 간격 축소 */
+        /* 헤더: 회원가입·로그인·마이페이지 텍스트 스타일, 세로선 전부 제거, 간격 축소 */
         #header .header-action .header-link {
             color: #A4B4C3; text-decoration: none; font-size: 15px;
             padding: 0; background: none; border: none;
         }
         #header .header-action .header-link:hover { color: #00C4F4; }
-        #header .header-action > ul > li:nth-child(2) { margin-left: 14px !important; padding-left: 0 !important; }
-        #header .header-action > ul > li:nth-child(2)::before,
-        #header .header-action > ul > li:nth-child(3)::before { display: none !important; }
-        #header .header-action > ul > li:nth-child(3) { margin-left: 20px !important; padding-left: 0 !important; }
+        #header .header-action > ul > li::before { display: none !important; }
+        #header .header-action > ul > li { margin-left: 14px !important; padding-left: 0 !important; }
+        #header .header-action > ul > li:first-child { margin-left: 0 !important; }
         /* 회원가입/로그인 모달 폼 스타일 */
         .auth-modal .modal-content { background: #0a1628 !important; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
         .auth-modal .modal-header { border-color: rgba(255,255,255,0.1); }
@@ -94,6 +93,7 @@
                                     <div class="header-action d-none d-md-block">
                                         <ul>
                                             <li id="header-signup-li"><a href="#" class="header-link" data-bs-toggle="modal" data-bs-target="#signupModal">회원가입</a></li>
+                                            <li id="header-mypage-li" style="display: none;"><a href="mypage.html" class="header-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link" id="header-notice-link">공지사항</a></li>
                                             <li><a href="#contact" class="header-link" id="header-qna-link">Q&A</a></li>
@@ -111,6 +111,7 @@
                                     <div class="mobile-menu-action">
                                         <ul>
                                             <li id="mobile-signup-li"><a href="#" class="header-link mobile-menu-link" data-bs-toggle="modal" data-bs-target="#signupModal">회원가입</a></li>
+                                            <li id="mobile-mypage-li" style="display: none;"><a href="mypage.html" class="header-link mobile-menu-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link mobile-menu-link" id="mobile-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link mobile-menu-link" id="mobile-notice-link">공지사항</a></li>
                                             <li><a href="#contact" class="header-link mobile-menu-link" id="mobile-qna-link">Q&A</a></li>
@@ -408,7 +409,7 @@
                                             <li><a href="#header">Home</a></li>
                                             <li><a href="#about">About</a></li>
                                             <li><a href="#contact">Contact</a></li>
-                                            <li><a href="/admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
+                                            <li><a href="../admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -621,14 +622,14 @@
                                 <input type="text" class="form-control" id="contact-name" name="name" placeholder="이름" required>
                             </div>
                             <div class="mb-3">
-                                <label for="contact-email" class="form-label">이메일</label>
-                                <input type="email" class="form-control" id="contact-email" name="email" placeholder="이메일" required>
+                                <label for="contact-title" class="form-label">제목</label>
+                                <input type="text" class="form-control" id="contact-title" name="title" placeholder="문의 제목" required>
                             </div>
                             <div class="mb-3">
-                                <label for="contact-message" class="form-label">메시지</label>
-                                <textarea class="form-control" id="contact-message" name="message" placeholder="메시지를 입력하세요" rows="4" required></textarea>
+                                <label for="contact-message" class="form-label">내용</label>
+                                <textarea class="form-control" id="contact-message" name="message" placeholder="문의 내용을 입력하세요" rows="4" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100" id="contact-submit-btn">문의 메시지 보내기</button>
+                            <button type="submit" class="btn btn-primary w-100" id="contact-submit-btn">문의 보내기</button>
                         </form>
                     </div>
                 </div>
@@ -756,26 +757,7 @@
             }
         })();
         </script>
-        <script>
-        (function() {
-            function openQnaModal() {
-                var modalEl = document.getElementById('qnaModal');
-                if (!modalEl) return;
-                if (document.body.classList.contains('mobile-menu-visible')) document.body.classList.remove('mobile-menu-visible');
-                if (typeof bootstrap !== 'undefined') {
-                    bootstrap.Modal.getOrCreateInstance(modalEl).show();
-                }
-            }
-            document.getElementById('header-qna-link') && document.getElementById('header-qna-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                openQnaModal();
-            });
-            document.getElementById('mobile-qna-link') && document.getElementById('mobile-qna-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                openQnaModal();
-            });
-        })();
-        </script>
+        <!-- Q&A 링크는 로그인 시에만 문의 모달, 비로그인 시 로그인 유도 (firebase-auth.js에서 처리) -->
         <script>
         (function() {
             var v = document.querySelector('.hero-bg-video');

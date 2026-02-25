@@ -10,6 +10,8 @@
 }
 
 * { box-sizing: border-box; }
+html.admin-authed .admin-page .admin-gate { display: none !important; }
+html.admin-authed .admin-page .admin-content-wrap { display: block !important; }
 body.admin-page {
 	margin: 0;
 	font-family: 'Outfit', -apple-system, sans-serif;
@@ -261,6 +263,58 @@ body.admin-page {
 	color: var(--admin-text);
 	white-space: pre-wrap;
 	word-break: break-word;
+}
+.admin-reply-cell { cursor: pointer; font-size: 0.9rem; vertical-align: middle; }
+.admin-reply-cell:hover { opacity: 0.9; }
+.admin-reply-status { font-weight: 600; display: inline-block; }
+.admin-reply-status-answered { color: #10b981; }
+.admin-reply-status-pending { color: #f59e0b; }
+.admin-detail-title { margin-bottom: 0.75rem; font-size: 0.95rem; color: var(--admin-text); }
+.admin-detail-label { font-size: 0.8rem; color: var(--admin-text); opacity: 0.8; margin-bottom: 0.35rem; }
+.admin-reply-form { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--admin-border); }
+.admin-reply-label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--admin-text); }
+.admin-reply-textarea { width: 100%; min-height: 80px; padding: 0.75rem; background: rgba(0,0,0,0.35); border: 1px solid var(--admin-border); border-radius: 8px; color: #fff; font-size: 0.9rem; font-family: inherit; resize: vertical; box-sizing: border-box; }
+.admin-reply-textarea:focus { outline: none; border-color: var(--admin-accent); }
+.admin-reply-save-btn { margin-top: 0.5rem; padding: 0.5rem 1rem; background: var(--admin-accent); border: none; border-radius: 6px; color: #fff; font-size: 0.9rem; cursor: pointer; }
+.admin-reply-save-btn:hover { opacity: 0.9; }
+.admin-reply-save-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* 문의 목록 페이징 */
+.admin-paging {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-top: 1.25rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--admin-border);
+}
+.admin-paging-btn {
+	padding: 0.5rem 0.9rem;
+	min-width: 2.5rem;
+	background: rgba(255,255,255,0.08);
+	border: 1px solid var(--admin-border);
+	border-radius: 8px;
+	color: var(--admin-text);
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.2s, border-color 0.2s;
+}
+.admin-paging-btn:hover:not(:disabled) {
+	background: rgba(255,255,255,0.12);
+	border-color: var(--admin-accent);
+	color: #fff;
+}
+.admin-paging-btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+.admin-paging-btn.active {
+	background: var(--admin-accent);
+	border-color: var(--admin-accent);
+	color: #fff;
 }
 
 /* 공지사항 폼용 입력/버튼 */

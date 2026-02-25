@@ -1,3 +1,13 @@
+/* 푸터 하단 고정: 푸터 밑 검은 공간 제거 (마이페이지·공지 등 짧은 페이지) */
+body.page-footer-stick {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+body.page-footer-stick main {
+	flex: 1 0 auto;
+}
+
 /* 10trix 텍스트 로고 */
 .logo-text {
 	font-weight: 700;
@@ -32,27 +42,33 @@
 	padding: 10px 20px !important;
 }
 
-/* 헤더 세로 폭 (적당한 높이) */
+/* 헤더 높이 축소 (모든 페이지 공통) */
 #header .menu-area.menu-style-two {
-	padding: 22px 0 !important;
+	padding: 14px 0 !important;
 }
 #header .menu-area.menu-style-two.sticky-menu {
-	padding: 16px 0 !important;
+	padding: 12px 0 !important;
 }
 #header .menu-area.menu-style-two .navbar-wrap > ul > li > a {
-	padding: 22px 0 !important;
+	padding: 14px 0 !important;
 }
 #header .menu-area.menu-style-two.sticky-menu .navbar-wrap > ul > li > a {
-	padding: 16px 0 !important;
+	padding: 12px 0 !important;
+}
+#header-fixed-height.active-height {
+	height: 72px !important;
 }
 
 /* 모바일: 헤더 높이 줄이기 */
 @media (max-width: 991px) {
 	#header .menu-area.menu-style-two {
-		padding: 12px 0 !important;
+		padding: 10px 0 !important;
 	}
 	#header .menu-area.menu-style-two.sticky-menu {
-		padding: 10px 0 !important;
+		padding: 8px 0 !important;
+	}
+	#header-fixed-height.active-height {
+		height: 56px !important;
 	}
 }
 
@@ -69,28 +85,16 @@
 	color: #00C4F4;
 }
 
-/* 헤더: 회원가입·로그인 간격 줄이고 세로 구분선 제거 */
-.header-action > ul > li:nth-child(2) {
+/* 헤더: 회원가입·마이페이지·로그인 간격, 세로 구분선 전부 제거 */
+.header-action > ul > li::before {
+	display: none !important;
+}
+.header-action > ul > li {
 	margin-left: 14px;
 	padding-left: 0;
 }
-.header-action > ul > li:nth-child(2)::before,
-.header-action > ul > li:nth-child(3)::before,
-.header-action > ul > li:nth-child(4)::before,
-.header-action > ul > li:nth-child(5)::before {
-	display: none;
-}
-.header-action > ul > li:nth-child(3) {
-	margin-left: 20px;
-	padding-left: 0;
-}
-.header-action > ul > li:nth-child(4) {
-	margin-left: 14px;
-	padding-left: 0;
-}
-.header-action > ul > li:nth-child(5) {
-	margin-left: 14px;
-	padding-left: 0;
+.header-action > ul > li:first-child {
+	margin-left: 0;
 }
 
 /* 모바일 메뉴: 회원가입·로그인·Buy 10TRX (로고 아래, PC와 동일하게) */

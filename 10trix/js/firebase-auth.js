@@ -38,10 +38,14 @@
         if (link) link.textContent = user ? '로그아웃' : '로그인';
         var signupLi = document.getElementById('header-signup-li');
         if (signupLi) signupLi.style.display = user ? 'none' : '';
+        var mypageLi = document.getElementById('header-mypage-li');
+        if (mypageLi) mypageLi.style.display = user ? '' : 'none';
         var mobileLink = document.getElementById('mobile-auth-link');
         if (mobileLink) mobileLink.textContent = user ? '로그아웃' : '로그인';
         var mobileSignupLi = document.getElementById('mobile-signup-li');
         if (mobileSignupLi) mobileSignupLi.style.display = user ? 'none' : '';
+        var mobileMypageLi = document.getElementById('mobile-mypage-li');
+        if (mobileMypageLi) mobileMypageLi.style.display = user ? 'list-item' : 'none';
     }
 
     auth.onAuthStateChanged(function(user) {
@@ -63,11 +67,42 @@
         } else {
             if (typeof bootstrap !== 'undefined' && loginModalEl) {
                 bootstrap.Modal.getOrCreateInstance(loginModalEl).show();
+            } else {
+                window.location.href = 'index.html';
             }
         }
     }
     if (link) link.addEventListener('click', handleAuthClick);
     if (mobileAuthLink) mobileAuthLink.addEventListener('click', handleAuthClick);
+
+    var qnaLink = document.getElementById('header-qna-link');
+    var mobileQnaLink = document.getElementById('mobile-qna-link');
+    var qnaModalEl = document.getElementById('qnaModal');
+    function handleQnaClick(e) {
+        e.preventDefault();
+        if (auth.currentUser) {
+            if (qnaModalEl && typeof bootstrap !== 'undefined') {
+                bootstrap.Modal.getOrCreateInstance(qnaModalEl).show();
+            }
+        } else {
+            alert('로그인 후 문의 가능합니다.');
+            if (loginModalEl && typeof bootstrap !== 'undefined') {
+                bootstrap.Modal.getOrCreateInstance(loginModalEl).show();
+            }
+        }
+    }
+    if (qnaLink) qnaLink.addEventListener('click', handleQnaClick);
+    if (mobileQnaLink) mobileQnaLink.addEventListener('click', handleQnaClick);
+
+    if (qnaModalEl && typeof bootstrap !== 'undefined') {
+        qnaModalEl.addEventListener('show.bs.modal', function() {
+            var user = auth.currentUser;
+            if (user) {
+                var nameEl = document.getElementById('contact-name');
+                if (nameEl) nameEl.value = user.displayName || '';
+            }
+        });
+    }
 
     var loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -211,44 +246,56 @@
         });
     }
 
-    var contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            var nameEl = document.getElementById('contact-name');
-            var emailEl = document.getElementById('contact-email');
-            var messageEl = document.getElementById('contact-message');
-            var btn = document.getElementById('contact-submit-btn');
-            var name = nameEl && nameEl.value ? nameEl.value.trim() : '';
-            var email = emailEl && emailEl.value ? emailEl.value.trim() : '';
-            var message = messageEl && messageEl.value ? messageEl.value.trim() : '';
-            if (!name || !email || !message) return;
-            if (btn) {
-                btn.disabled = true;
-                btn.textContent = '전송 중...';
+    function handleContactSubmit(e) {
+        if (!e.target || e.target.id !== 'contact-form') return;
+        e.preventDefault();
+        var user = auth.currentUser;
+        if (!user) {
+            alert('로그인 후 문의할 수 있습니다.');
+            return;
+        }
+        var nameEl = document.getElementById('contact-name');
+        var titleEl = document.getElementById('contact-title');
+        var messageEl = document.getElementById('contact-message');
+        var btn = document.getElementById('contact-submit-btn');
+        var name = nameEl && nameEl.value ? nameEl.value.trim() : '';
+        var title = titleEl && titleEl.value ? titleEl.value.trim() : '';
+        var message = messageEl && messageEl.value ? messageEl.value.trim() : '';
+        if (!name || !title || !message) {
+            alert('이름, 제목, 내용을 모두 입력해 주세요.');
+            return;
+        }
+        var contactForm = e.target;
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = '전송 중...';
+        }
+        var payload = {
+            name: name,
+            title: title,
+            email: user.email || '',
+            message: message,
+            userId: user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+        formsRef().add(payload).then(function() {
+            contactForm.reset();
+            alert('문의가 전송되었습니다.');
+            var qnaModalEl = document.getElementById('qnaModal');
+            if (qnaModalEl && typeof bootstrap !== 'undefined') {
+                var modalInstance = bootstrap.Modal.getInstance(qnaModalEl);
+                if (modalInstance) modalInstance.hide();
             }
-            formsRef().add({
-                name: name,
-                email: email,
-                message: message,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function() {
-                contactForm.reset();
-                alert('메시지가 전송되었습니다.');
-                var qnaModalEl = document.getElementById('qnaModal');
-                if (qnaModalEl && typeof bootstrap !== 'undefined') {
-                    var modalInstance = bootstrap.Modal.getInstance(qnaModalEl);
-                    if (modalInstance) modalInstance.hide();
-                }
-            }).catch(function(err) {
-                alert('전송에 실패했습니다. 다시 시도해 주세요.');
-                console.warn(err);
-            }).finally(function() {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.textContent = '문의 메시지 보내기';
-                }
-            });
+        }).catch(function(err) {
+            alert('전송에 실패했습니다. 다시 시도해 주세요.');
+            console.warn(err);
+        }).finally(function() {
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = '문의 보내기';
+            }
         });
     }
+
+    document.addEventListener('submit', handleContactSubmit, true);
 })();

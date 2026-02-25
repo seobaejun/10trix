@@ -1,0 +1,454 @@
+<!doctype html>
+<html class="no-js" lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>마이페이지 - 10trix (텐트릭스)</title>
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.png">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="../assets/css/default.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/responsive.css">
+        <link rel="stylesheet" href="custom.css?v=10trix202602">
+        <style>
+        body { background: #030B15; color: #fff; min-height: 100vh; }
+        #header .header-action .header-link { color: #A4B4C3; text-decoration: none; font-size: 15px; }
+        #header .header-action .header-link:hover { color: #00C4F4; }
+        .mypage-area { padding: 3rem 0 4rem; min-height: 50vh; display: flex; flex-direction: column; justify-content: center; }
+        body.page-footer-stick main.mypage-area { flex: 1 0 auto; min-height: 0; }
+        body.page-footer-stick main.mypage-area .container { flex: 0 0 auto; }
+        .mypage-cards-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1100px; margin: 0 auto 2.5rem; }
+        @media (max-width: 991px) { .mypage-cards-wrap { grid-template-columns: 1fr; } }
+        .mypage-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2.5rem; height: 420px; min-height: 420px; max-height: 420px; display: flex; flex-direction: column; cursor: pointer; transition: border-color 0.2s, background 0.2s; overflow: hidden; }
+        .mypage-card:hover { border-color: rgba(0,196,244,0.4); background: rgba(255,255,255,0.07); }
+        .mypage-card h2 { font-size: 1.35rem; margin-bottom: 1.25rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+        .mypage-card .user-email { color: #00C4F4; font-size: 1.05rem; margin-bottom: 0.75rem; word-break: break-all; }
+        .mypage-card .user-name { color: #A4B4C3; font-size: 0.95rem; margin-bottom: 0.75rem; }
+        .mypage-card .user-wallet { color: #A4B4C3; font-size: 0.95rem; margin-bottom: 0; word-break: break-all; }
+        .mypage-card .user-wallet-address { color: #00C4F4; }
+        .mypage-card .user-wallet-empty { color: rgba(164,180,195,0.7); font-size: 0.9rem; }
+        .mypage-card .card-hint { margin-top: auto; color: rgba(164,180,195,0.7); font-size: 0.9rem; }
+        #mypage-inquiries-wrap { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 4px; }
+        #mypage-inquiries-wrap::-webkit-scrollbar { width: 6px; }
+        #mypage-inquiries-wrap::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 3px; }
+        #mypage-inquiries-wrap::-webkit-scrollbar-thumb { background: rgba(0,196,244,0.4); border-radius: 3px; }
+        #mypage-inquiries-wrap::-webkit-scrollbar-thumb:hover { background: rgba(0,196,244,0.6); }
+        .mypage-inquiries-list { list-style: none; padding: 0; margin: 0; }
+        .mypage-inquiry-item { padding: 1rem; margin-bottom: 0.75rem; background: rgba(0,0,0,0.25); border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+        .mypage-inquiry-item:hover { border-color: rgba(0,196,244,0.3); background: rgba(0,0,0,0.35); }
+        .mypage-inquiry-item:last-child { margin-bottom: 0; }
+        .mypage-inquiry-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem; }
+        .mypage-inquiry-date { font-size: 0.8rem; color: #A4B4C3; }
+        .mypage-inquiry-badge { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 6px; }
+        .mypage-inquiry-badge.answered { background: rgba(0,196,244,0.25); color: #00C4F4; }
+        .mypage-inquiry-badge.pending { background: rgba(164,180,195,0.2); color: #A4B4C3; }
+        .mypage-inquiry-preview { color: #E2E8F0; font-size: 0.95rem; font-weight: 500; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mypage-detail-label { font-size: 0.8rem; color: #A4B4C3; margin-bottom: 0.35rem; }
+        .mypage-inquiry-item.expanded .mypage-inquiry-preview { display: none; }
+        .mypage-inquiry-detail { display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .mypage-inquiry-item.expanded .mypage-inquiry-detail { display: block; }
+        .mypage-inquiry-msg { color: #E2E8F0; font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+        .mypage-inquiry-reply { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: #00C4F4; }
+        .mypage-inquiry-reply strong { display: block; margin-bottom: 0.25rem; color: #A4B4C3; }
+        .mypage-inquiry-click-hint { font-size: 0.75rem; color: rgba(164,180,195,0.6); margin-top: 0.25rem; }
+        .mypage-inquiry-item.expanded .mypage-inquiry-click-hint { display: none; }
+        .mypage-btn-back-wrap { text-align: center; margin-top: 0.5rem; }
+        .mypage-btn-back { display: inline-block; padding: 0.6rem 1.5rem; color: #00C4F4; text-decoration: none; font-size: 1rem; border: 1px solid rgba(0,196,244,0.5); border-radius: 8px; transition: background 0.2s, color 0.2s; }
+        .mypage-btn-back:hover { background: rgba(0,196,244,0.15); color: #00a8d4; }
+        .mypage-login-required { text-align: center; color: #A4B4C3; padding: 3rem 2rem; }
+        .mypage-empty-inquiries { color: #A4B4C3; font-size: 0.95rem; padding: 1.5rem; text-align: center; }
+        #profileEditModal .form-control { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+        #profileEditModal .form-control:focus { background: rgba(0,0,0,0.4); border-color: #00C4F4; box-shadow: 0 0 0 0.2rem rgba(0,196,244,0.25); }
+        #profileEditModal .form-label { color: #A4B4C3; }
+        .footer-company-info { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-company-info .footer-company-col { flex: 1; min-width: 140px; }
+        .footer-company-info p { margin-bottom: 0.2rem; font-size: 0.8rem; line-height: 1.4; }
+        </style>
+    </head>
+    <body class="home-01 page-footer-stick">
+        <header id="header">
+            <div id="header-fixed-height"></div>
+            <div id="sticky-header" class="menu-area menu-style-two">
+                <div class="container custom-container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                            <div class="menu-wrap">
+                                <nav class="menu-nav">
+                                    <div class="logo"><a href="index.html" class="logo-text">10trix</a></div>
+                                    <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                        <ul class="navigation">
+                                            <li><a href="index.html#header" class="section-link">Home</a></li>
+                                            <li><a href="index.html#about" class="section-link">About</a></li>
+                                            <li><a href="index.html#contact" class="section-link">Contact</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="header-action d-none d-md-block">
+                                        <ul>
+                                            <li id="header-signup-li"><a href="index.html" class="header-link">회원가입</a></li>
+                                            <li id="header-mypage-li" style="display: none;"><a href="mypage.html" class="header-link">마이페이지</a></li>
+                                            <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
+                                            <li><a href="notice.html" class="header-link">공지사항</a></li>
+                                            <li><a href="index.html#contact" class="header-link">Q&A</a></li>
+                                            <li class="header-btn"><a href="#" class="btn">Buy 10TRX</a></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="mobile-menu">
+                                <nav class="menu-box">
+                                    <div class="close-btn"><i class="fas fa-times"></i></div>
+                                    <div class="nav-logo"><a href="index.html" class="logo-text">10trix</a></div>
+                                    <div class="mobile-menu-action">
+                                        <ul>
+                                            <li id="mobile-signup-li"><a href="index.html" class="header-link mobile-menu-link">회원가입</a></li>
+                                            <li id="mobile-mypage-li" style="display: none;"><a href="mypage.html" class="header-link mobile-menu-link">마이페이지</a></li>
+                                            <li><a href="#" class="header-link mobile-menu-link" id="mobile-auth-link">로그인</a></li>
+                                            <li><a href="notice.html" class="header-link mobile-menu-link">공지사항</a></li>
+                                            <li><a href="index.html#contact" class="header-link mobile-menu-link">Q&A</a></li>
+                                            <li class="header-btn"><a href="#" class="btn mobile-menu-btn">Buy 10TRX</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="menu-outer"></div>
+                                    <div class="social-links">
+                                        <ul class="clearfix">
+                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="menu-backdrop"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="mypage-area">
+            <div class="container">
+                <div id="mypage-content" style="display: none;">
+                    <div class="mypage-cards-wrap">
+                        <div id="mypage-card-profile" class="mypage-card" role="button" tabindex="0" aria-label="개인정보 수정">
+                            <h2><i class="fas fa-user-edit"></i> 개인정보</h2>
+                            <div id="mypage-user-info"></div>
+                            <p class="card-hint">클릭하면 개인정보를 수정할 수 있습니다.</p>
+                        </div>
+                        <div class="mypage-card" style="cursor: default;">
+                            <h2><i class="fas fa-envelope-open-text"></i> 문의 내역</h2>
+                            <div id="mypage-inquiries-wrap">
+                                <ul id="mypage-inquiries-list" class="mypage-inquiries-list"></ul>
+                                <p id="mypage-empty-inquiries" class="mypage-empty-inquiries" style="display: none;">문의한 내역이 없습니다.</p>
+                            </div>
+                            <p class="card-hint">메인 페이지 Q&amp;A에서 문의하시면 여기서 답변을 확인할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <div class="mypage-btn-back-wrap">
+                        <a href="index.html" class="mypage-btn-back"><i class="fas fa-arrow-left"></i> 메인으로</a>
+                    </div>
+                </div>
+                <div id="mypage-login-required" class="mypage-login-required">
+                    <p>로그인이 필요합니다.</p>
+                    <a href="index.html" class="mypage-btn-back">메인으로 이동</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- 개인정보 수정 모달 -->
+        <div class="modal fade" id="profileEditModal" tabindex="-1" aria-labelledby="profileEditModalLabel" aria-hidden="true" style="background: rgba(0,0,0,0.7);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background: #0a1628; color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="profileEditModalLabel">개인정보 수정</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="profile-edit-email" class="form-label">이메일</label>
+                            <input type="text" class="form-control" id="profile-edit-email" readonly style="background: rgba(0,0,0,0.3); color: #A4B4C3;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-edit-name" class="form-label">이름</label>
+                            <input type="text" class="form-control" id="profile-edit-name" placeholder="이름" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: #fff;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-edit-wallet" class="form-label">코인지갑 주소 <span class="text-muted">(선택)</span></label>
+                            <input type="text" class="form-control" id="profile-edit-wallet" placeholder="코인지갑 주소 (회원가입 시 비어있으면 여기서 추가)" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: #fff;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-edit-wallet-confirm" class="form-label">코인지갑 주소 확인</label>
+                            <input type="text" class="form-control" id="profile-edit-wallet-confirm" placeholder="위와 동일하게 입력" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); color: #fff;">
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" id="profile-edit-save-btn" style="background: #00C4F4; border-color: #00C4F4;">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-area">
+                <div class="container">
+                    <div class="footer-scroll-wrap">
+                        <button class="scroll-to-target" data-target="html"><i class="fas fa-arrow-up"></i></button>
+                    </div>
+                    <div class="footer-top">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                <div class="footer-widget">
+                                    <a href="index.html" class="f-logo logo-text">10trix</a>
+                                    <div class="footer-content">
+                                        <p>10trix (텐트릭스) – 안전하고 투명한 크립토 토큰 플랫폼. 쉽고 신뢰할 수 있는 토큰 거래를 경험하세요.</p>
+                                        <ul class="footer-social">
+                                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-telegram-plane"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-5 col-sm-6">
+                                <div class="footer-widget">
+                                    <h4 class="fw-title">바로가기</h4>
+                                    <div class="footer-link footer-nav-same-as-header">
+                                        <ul>
+                                            <li><a href="index.html#header">Home</a></li>
+                                            <li><a href="index.html#about">About</a></li>
+                                            <li><a href="index.html#contact">Contact</a></li>
+                                            <li><a href="../admin/" target="_blank" rel="noopener noreferrer">관리자</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="footer-widget">
+                                    <h4 class="fw-title">회사 정보</h4>
+                                    <div class="footer-content footer-company-info">
+                                        <div class="footer-company-col">
+                                            <p>회사명 (주)딩펫씨큐리티</p>
+                                            <p>주소 대전시 유성구 동서대로125 국립 한밭대학교 s9동 101호</p>
+                                            <p>사업자 등록번호 768-88-03514</p>
+                                            <p>대표 송건회</p>
+                                        </div>
+                                        <div class="footer-company-col">
+                                            <p>전화 1670-4519</p>
+                                            <p>팩스 044-862-0069</p>
+                                            <p>통신판매업신고번호 제2025-대전유성-0691호</p>
+                                            <p>개인정보 보호책임자 송건회</p>
+                                            <p>부가통신사업신고번호 12345호</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <div class="copyright-text">
+                                    <p>Copyright &copy; 2025 10trix (텐트릭스). All Rights Reserved.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-none d-sm-block">
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a href="index.html">이용약관</a></li>
+                                        <li><a href="index.html">개인정보처리방침</a></li>
+                                        <li><a href="#">Buy 10TRX</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../firebase-config.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="../assets/js/vendor/jquery-3.6.0.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script>
+        (function() {
+            document.querySelector('.mobile-nav-toggler') && document.querySelector('.mobile-nav-toggler').addEventListener('click', function() { document.body.classList.add('mobile-menu-visible'); });
+            document.querySelector('.mobile-menu .close-btn') && document.querySelector('.mobile-menu .close-btn').addEventListener('click', function() { document.body.classList.remove('mobile-menu-visible'); });
+            document.querySelector('.menu-backdrop') && document.querySelector('.menu-backdrop').addEventListener('click', function() { document.body.classList.remove('mobile-menu-visible'); });
+            document.querySelector('.scroll-to-target') && document.querySelector('.scroll-to-target').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            document.querySelectorAll('.mobile-menu a').forEach(function(a) { a.addEventListener('click', function() { document.body.classList.remove('mobile-menu-visible'); }); });
+        })();
+        </script>
+        <script src="js/firebase-auth.js"></script>
+        <script>
+        (function() {
+            var config = typeof window.FIREBASE_CONFIG !== 'undefined' ? window.FIREBASE_CONFIG : null;
+            if (!config || !config.apiKey || config.apiKey.indexOf('YOUR_') === 0) {
+                var wrap = document.getElementById('mypage-content');
+                if (wrap) { wrap.style.display = ''; document.getElementById('mypage-user-info').innerHTML = '<p class="text-secondary">Firebase 설정 후 로그인 상태를 확인할 수 있습니다.</p>'; }
+                return;
+            }
+            try {
+                if (!firebase.apps.length) firebase.initializeApp(config);
+            } catch (e) {}
+            var db = firebase.firestore();
+            var auth = firebase.auth();
+            var formsRef = db.collection('sites').doc('10trix').collection('forms');
+            var usersRef = db.collection('sites').doc('10trix').collection('users');
+
+            function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;'); }
+
+            function renderUserInfo(user, userData) {
+                var infoEl = document.getElementById('mypage-user-info');
+                if (!infoEl) return;
+                var email = user.email || '-';
+                var name = (userData && userData.displayName) || user.displayName || '-';
+                var wallet = (userData && userData.coinWalletAddress) ? userData.coinWalletAddress : '';
+                var walletHtml = wallet ? '<p class="user-wallet"><strong>지갑주소</strong><br><span class="user-wallet-address">' + escapeHtml(wallet) + '</span></p>' : '<p class="user-wallet user-wallet-empty">지갑주소: 미등록</p>';
+                infoEl.innerHTML = '<p class="user-email"><strong>이메일</strong><br>' + escapeHtml(email) + '</p><p class="user-name">이름: ' + escapeHtml(name) + '</p>' + walletHtml;
+            }
+
+            function loadMyInquiries(uid) {
+                var listEl = document.getElementById('mypage-inquiries-list');
+                var emptyEl = document.getElementById('mypage-empty-inquiries');
+                if (!listEl) return;
+                listEl.innerHTML = '';
+                if (emptyEl) { emptyEl.textContent = '문의한 내역이 없습니다.'; emptyEl.style.display = 'none'; }
+                if (!uid) {
+                    if (emptyEl) emptyEl.style.display = 'block';
+                    return;
+                }
+                formsRef.where('userId', '==', uid).get().then(function(snap) {
+                    var docs = snap.docs;
+                    docs.sort(function(a, b) {
+                        var ta = a.data().createdAt && a.data().createdAt.toDate ? a.data().createdAt.toDate().getTime() : 0;
+                        var tb = b.data().createdAt && b.data().createdAt.toDate ? b.data().createdAt.toDate().getTime() : 0;
+                        return tb - ta;
+                    });
+                    if (docs.length === 0) {
+                        if (emptyEl) { emptyEl.textContent = '문의한 내역이 없습니다.'; emptyEl.style.display = 'block'; }
+                        return;
+                    }
+                    if (emptyEl) emptyEl.style.display = 'none';
+                    docs.forEach(function(doc) {
+                        var d = doc.data();
+                        var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString('ko-KR') : '-';
+                        var titleText = d.title || (d.message ? (d.message.length > 40 ? d.message.slice(0, 40) + '…' : d.message) : '(제목 없음)');
+                        var fullMsg = d.message || '-';
+                        var fullMsgHtml = escapeHtml(fullMsg).replace(/\n/g, '<br>');
+                        var hasReply = !!(d.adminReply && d.adminReply.trim());
+                        var badgeClass = hasReply ? 'answered' : 'pending';
+                        var badgeText = hasReply ? '답변' : '미답변';
+                        var replyHtml = '';
+                        if (hasReply) {
+                            var replyDate = d.adminReplyAt && d.adminReplyAt.toDate ? d.adminReplyAt.toDate().toLocaleString('ko-KR') : '';
+                            replyHtml = '<div class="mypage-inquiry-reply"><strong>관리자 답변' + (replyDate ? ' (' + replyDate + ')' : '') + '</strong>' + escapeHtml(d.adminReply).replace(/\n/g, '<br>') + '</div>';
+                        } else {
+                            replyHtml = '<div class="mypage-inquiry-reply" style="color: #A4B4C3;"><strong>관리자 답변</strong><br>아직 답변이 없습니다.</div>';
+                        }
+                        var li = document.createElement('li');
+                        li.className = 'mypage-inquiry-item';
+                        li.innerHTML = '<div class="mypage-inquiry-head"><span class="mypage-inquiry-date">' + dateStr + '</span><span class="mypage-inquiry-badge ' + badgeClass + '">' + escapeHtml(badgeText) + '</span></div>' +
+                            '<div class="mypage-inquiry-preview">' + escapeHtml(titleText) + '</div>' +
+                            '<div class="mypage-inquiry-detail"><div class="mypage-detail-label">내용</div><div class="mypage-inquiry-msg">' + fullMsgHtml + '</div>' + replyHtml + '</div>' +
+                            '<div class="mypage-inquiry-click-hint">클릭하면 내용·답변 보기</div>';
+                        li.addEventListener('click', function() { li.classList.toggle('expanded'); });
+                        listEl.appendChild(li);
+                    });
+                }).catch(function(err) {
+                    if (emptyEl) { emptyEl.textContent = '문의 내역을 불러오지 못했습니다.'; emptyEl.style.display = 'block'; }
+                    console.warn(err);
+                });
+            }
+
+
+            auth.onAuthStateChanged(function(user) {
+                var contentEl = document.getElementById('mypage-content');
+                var loginReqEl = document.getElementById('mypage-login-required');
+                var headerMypage = document.getElementById('header-mypage-li');
+                var mobileMypage = document.getElementById('mobile-mypage-li');
+                var headerAuth = document.getElementById('header-auth-link');
+                var mobileAuth = document.getElementById('mobile-auth-link');
+                var headerSignup = document.getElementById('header-signup-li');
+                var mobileSignup = document.getElementById('mobile-signup-li');
+                if (headerAuth) headerAuth.textContent = user ? '로그아웃' : '로그인';
+                if (mobileAuth) mobileAuth.textContent = user ? '로그아웃' : '로그인';
+                if (headerSignup) headerSignup.style.display = user ? 'none' : '';
+                if (mobileSignup) mobileSignup.style.display = user ? 'none' : '';
+                if (headerMypage) headerMypage.style.display = user ? 'list-item' : 'none';
+                if (mobileMypage) mobileMypage.style.display = user ? 'list-item' : 'none';
+                if (user) {
+                    if (contentEl) contentEl.style.display = 'block';
+                    if (loginReqEl) loginReqEl.style.display = 'none';
+                    usersRef.doc(user.uid).get().then(function(docSnap) {
+                        var data = docSnap.exists ? docSnap.data() : {};
+                        renderUserInfo(user, data);
+                    }).catch(function() { renderUserInfo(user, {}); });
+                    loadMyInquiries(user.uid);
+                } else {
+                    if (contentEl) contentEl.style.display = 'none';
+                    if (loginReqEl) loginReqEl.style.display = 'block';
+                }
+            });
+
+            document.getElementById('mypage-card-profile') && document.getElementById('mypage-card-profile').addEventListener('click', function() {
+                var user = auth.currentUser;
+                if (!user) return;
+                var modalEl = document.getElementById('profileEditModal');
+                var emailInput = document.getElementById('profile-edit-email');
+                var nameInput = document.getElementById('profile-edit-name');
+                var walletInput = document.getElementById('profile-edit-wallet');
+                var walletConfirmInput = document.getElementById('profile-edit-wallet-confirm');
+                if (emailInput) emailInput.value = user.email || '';
+                if (walletInput) walletInput.value = '';
+                if (walletConfirmInput) walletConfirmInput.value = '';
+                usersRef.doc(user.uid).get().then(function(docSnap) {
+                    var data = docSnap.exists ? docSnap.data() : {};
+                    if (nameInput) nameInput.value = data.displayName || user.displayName || '';
+                    if (walletInput) walletInput.value = data.coinWalletAddress || '';
+                    if (walletConfirmInput) walletConfirmInput.value = data.coinWalletAddress || '';
+                }).catch(function() {
+                    if (nameInput) nameInput.value = user.displayName || '';
+                });
+                if (modalEl && typeof bootstrap !== 'undefined') bootstrap.Modal.getOrCreateInstance(modalEl).show();
+            });
+
+            document.getElementById('profile-edit-save-btn') && document.getElementById('profile-edit-save-btn').addEventListener('click', function() {
+                var user = auth.currentUser;
+                if (!user) return;
+                var nameInput = document.getElementById('profile-edit-name');
+                var walletInput = document.getElementById('profile-edit-wallet');
+                var walletConfirmInput = document.getElementById('profile-edit-wallet-confirm');
+                var name = nameInput && nameInput.value ? nameInput.value.trim() : '';
+                var wallet = walletInput && walletInput.value ? walletInput.value.trim() : '';
+                var walletConfirm = walletConfirmInput && walletConfirmInput.value ? walletConfirmInput.value.trim() : '';
+                if (wallet || walletConfirm) {
+                    if (wallet !== walletConfirm) {
+                        alert('코인지갑 주소가 일치하지 않습니다.');
+                        return;
+                    }
+                }
+                var walletToSave = wallet || null;
+                var btn = document.getElementById('profile-edit-save-btn');
+                if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; }
+                var updateData = { displayName: name || null, updatedAt: firebase.firestore.FieldValue.serverTimestamp() };
+                if (walletToSave !== undefined) updateData.coinWalletAddress = walletToSave;
+                usersRef.doc(user.uid).set(updateData, { merge: true }).then(function() {
+                    renderUserInfo(user, { displayName: name || null, coinWalletAddress: walletToSave || '' });
+                    var modalEl = document.getElementById('profileEditModal');
+                    if (modalEl && typeof bootstrap !== 'undefined') bootstrap.Modal.getInstance(modalEl).hide();
+                }).catch(function(err) {
+                    alert('저장에 실패했습니다. 다시 시도해 주세요.');
+                    console.warn(err);
+                }).finally(function() {
+                    if (btn) { btn.disabled = false; btn.textContent = '저장'; }
+                });
+            });
+        })();
+        </script>
+    </body>
+</html>

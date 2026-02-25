@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>관리자 - 10trix 텐트릭스</title>
+	<script>(function(){if(sessionStorage.getItem('admin_authenticated')==='1'){document.documentElement.classList.add('admin-authed');}})();</script>
 	<link rel="stylesheet" href="css/admin.css?v=2">
 	<style>
 	/* 공지사항 입력폼: 인라인 스타일 (확실 적용) */
@@ -145,14 +146,14 @@
 	</div>
 	<div id="admin-content" class="admin-content-wrap" style="display: none;">
 	<aside class="admin-sidebar">
-		<div class="logo"><a href="/10trix/" class="admin-logo-text">10trix</a><span class="admin-logo-sub">관리자</span></div>
+		<div class="logo"><a href="../10trix/" class="admin-logo-text">10trix</a><span class="admin-logo-sub">관리자</span></div>
 		<nav>
 			<a href="#dashboard" class="admin-nav active" data-section="dashboard">대시보드</a>
 			<a href="#members" class="admin-nav" data-section="members">회원정보</a>
 			<a href="#forms" class="admin-nav" data-section="forms">입력폼 내용</a>
 			<a href="#notices" class="admin-nav" data-section="notices">공지사항</a>
 		</nav>
-		<a href="/10trix/" class="admin-sidebar-home">홈으로 가기</a>
+		<a href="../10trix/" class="admin-sidebar-home">홈으로 가기</a>
 	</aside>
 
 	<main class="admin-main">
@@ -190,7 +191,7 @@
 						</tr>
 					</thead>
 					<tbody id="members-tbody">
-						<tr><td colspan="5" class="empty" id="members-empty">불러오는 중...</td></tr>
+						<tr><td colspan="5" class="empty" id="members-empty">로딩 중...</td></tr>
 					</tbody>
 				</table>
 			</div>
@@ -207,14 +208,16 @@
 							<th>번호</th>
 							<th>이름</th>
 							<th>이메일</th>
-							<th>메시지</th>
+							<th>제목</th>
 							<th>접수일시</th>
+							<th>답변</th>
 						</tr>
 					</thead>
 					<tbody id="forms-tbody">
-						<tr><td colspan="5" class="empty" id="forms-empty">불러오는 중...</td></tr>
+						<tr><td colspan="6" class="empty" id="forms-empty">로딩 중...</td></tr>
 					</tbody>
 				</table>
+				<div id="forms-paging" class="admin-paging" aria-label="문의 목록 페이지"></div>
 			</div>
 		</section>
 
@@ -281,10 +284,10 @@
 		if (sessionStorage.getItem(STORAGE_KEY) === '1') {
 			if (gate) gate.style.display = 'none';
 			if (content) content.style.display = '';
-			return;
+		} else {
+			if (gate) gate.style.display = 'flex';
+			if (content) content.style.display = 'none';
 		}
-		if (gate) gate.style.display = 'flex';
-		if (content) content.style.display = 'none';
 		if (form) {
 			form.addEventListener('submit', function(e) {
 				e.preventDefault();
@@ -349,52 +352,147 @@
 			var statMembers = document.getElementById('stat-members');
 			var statForms = document.getElementById('stat-forms');
 
-			function renderForms(snap) {
+			var FORMS_PER_PAGE = 10;
+			var allFormsDocs = [];
+			var currentFormsPage = 1;
+
+			function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+			function renderFormsPage() {
 				var tbody = document.getElementById('forms-tbody');
 				var emptyRow = document.getElementById('forms-empty');
 				var emptyTr = emptyRow.closest ? emptyRow.closest('tr') : emptyRow.parentNode;
-				var docs = snap.docs;
-				if (docs.length === 0) {
+				var total = allFormsDocs.length;
+				if (total === 0) {
 					emptyRow.textContent = '접수된 문의가 없습니다.';
 					if (emptyTr) emptyTr.style.display = '';
 					if (statForms) statForms.textContent = '0';
+					document.getElementById('forms-paging').innerHTML = '';
 					return;
 				}
+				if (statForms) statForms.textContent = String(total);
+				var totalPages = Math.max(1, Math.ceil(total / FORMS_PER_PAGE));
+				if (currentFormsPage > totalPages) currentFormsPage = totalPages;
+				var start = (currentFormsPage - 1) * FORMS_PER_PAGE;
+				var pageDocs = allFormsDocs.slice(start, start + FORMS_PER_PAGE);
 				if (emptyTr) emptyTr.style.display = 'none';
-				if (statForms) statForms.textContent = String(docs.length);
+				var toRemove = [];
+				for (var n = tbody.firstChild; n; n = n.nextSibling) { if (n !== emptyTr) toRemove.push(n); }
+				toRemove.forEach(function(r) { tbody.removeChild(r); });
 				var MAX_MSG_PREVIEW = 40;
-				function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-				docs.forEach(function(doc, i) {
+				pageDocs.forEach(function(doc, idx) {
 					var d = doc.data();
+					var docId = doc.id;
+					var globalIndex = total - (start + idx);
+					var titleText = d.title || (d.message ? (d.message.length <= MAX_MSG_PREVIEW ? d.message : d.message.slice(0, MAX_MSG_PREVIEW) + '…') : '-');
 					var rawMsg = d.message || '-';
 					var fullMsgEscaped = escapeHtml(rawMsg);
-					var preview = rawMsg.length <= MAX_MSG_PREVIEW ? rawMsg : rawMsg.slice(0, MAX_MSG_PREVIEW) + '…';
 					var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString('ko-KR') : '-';
+					var replyStatusClass = d.adminReply ? 'admin-reply-status-answered' : 'admin-reply-status-pending';
+					var replyStatusText = d.adminReply ? '답변됨' : '미답변';
 					var tr = document.createElement('tr');
-					tr.innerHTML = '<td>' + (docs.length - i) + '</td><td>' + escapeHtml(d.name || '-') + '</td><td>' + escapeHtml(d.email || '-') + '</td><td class="admin-msg-cell" title="클릭하면 전체 내용 펼치기">' + escapeHtml(preview) + '</td><td>' + dateStr + '</td>';
+					tr.innerHTML = '<td>' + globalIndex + '</td><td>' + escapeHtml(d.name || '-') + '</td><td>' + escapeHtml(d.email || '-') + '</td><td class="admin-msg-cell" title="클릭하면 답변 입력란 펼치기">' + escapeHtml(titleText) + '</td><td>' + dateStr + '</td><td class="admin-reply-cell" title="클릭하면 답변 입력"><span class="admin-reply-status ' + replyStatusClass + '">' + escapeHtml(replyStatusText) + '</span></td>';
 					tbody.insertBefore(tr, emptyTr);
 					var detailTr = document.createElement('tr');
 					detailTr.className = 'admin-msg-detail-row';
 					detailTr.style.display = 'none';
 					var detailTd = document.createElement('td');
-					detailTd.colSpan = 5;
+					detailTd.colSpan = 6;
 					detailTd.className = 'admin-msg-detail-cell';
-					detailTd.innerHTML = '<pre class="admin-message-body">' + fullMsgEscaped + '</pre>';
+					detailTd.setAttribute('data-doc-id', docId);
+					var titleBlock = d.title ? '<div class="admin-detail-title"><strong>제목</strong> ' + escapeHtml(d.title) + '</div>' : '';
+					detailTd.innerHTML = titleBlock + '<div class="admin-detail-label">내용</div><pre class="admin-message-body">' + fullMsgEscaped + '</pre>' +
+						'<div class="admin-reply-form"><label class="admin-reply-label">답변 입력 (마이페이지에서 사용자에게 표시됩니다)</label>' +
+						'<textarea class="admin-reply-textarea" rows="3" placeholder="답변을 입력하세요">' + escapeHtml(d.adminReply || '') + '</textarea>' +
+						'<button type="button" class="admin-reply-save-btn">답변 저장</button></div>';
 					detailTr.appendChild(detailTd);
 					tbody.insertBefore(detailTr, emptyTr);
 				});
-				tbody.addEventListener('click', function(e) {
-					var cell = e.target.closest && e.target.closest('.admin-msg-cell');
-					if (!cell) return;
-					var dataTr = cell.closest('tr');
-					var nextTr = dataTr && dataTr.nextElementSibling;
-					if (nextTr && nextTr.classList.contains('admin-msg-detail-row')) {
-						var isHidden = nextTr.style.display === 'none';
-						nextTr.style.display = isHidden ? 'table-row' : 'none';
-						cell.setAttribute('title', isHidden ? '클릭하면 접기' : '클릭하면 전체 내용 펼치기');
+				var pagingEl = document.getElementById('forms-paging');
+				if (total === 0) {
+					pagingEl.innerHTML = '';
+				} else {
+					var pagingHtml = '';
+					pagingHtml += '<button type="button" class="admin-paging-btn" data-page="prev" ' + (currentFormsPage <= 1 ? 'disabled' : '') + '>이전</button>';
+					for (var p = 1; p <= totalPages; p++) {
+						pagingHtml += '<button type="button" class="admin-paging-btn admin-paging-num' + (p === currentFormsPage ? ' active' : '') + '" data-page="' + p + '">' + p + '</button>';
 					}
+					pagingHtml += '<button type="button" class="admin-paging-btn" data-page="next" ' + (currentFormsPage >= totalPages ? 'disabled' : '') + '>다음</button>';
+					pagingEl.innerHTML = pagingHtml;
+					pagingEl.querySelectorAll('.admin-paging-btn').forEach(function(btn) {
+						btn.addEventListener('click', function() {
+							var page = btn.getAttribute('data-page');
+							if (page === 'prev' && currentFormsPage > 1) { currentFormsPage--; renderFormsPage(); }
+							else if (page === 'next' && currentFormsPage < totalPages) { currentFormsPage++; renderFormsPage(); }
+							else if (page !== 'prev' && page !== 'next') { var num = parseInt(page, 10); if (num >= 1 && num <= totalPages) { currentFormsPage = num; renderFormsPage(); } }
+						});
+					});
+				}
+			}
+
+			function toggleDetailRow(cell) {
+				var dataTr = cell.closest('tr');
+				var nextTr = dataTr && dataTr.nextElementSibling;
+				if (nextTr && nextTr.classList.contains('admin-msg-detail-row')) {
+					var isHidden = nextTr.style.display === 'none';
+					nextTr.style.display = isHidden ? 'table-row' : 'none';
+					var msgCell = dataTr.querySelector('.admin-msg-cell');
+					var replyCell = dataTr.querySelector('.admin-reply-cell');
+					if (msgCell) msgCell.setAttribute('title', isHidden ? '클릭하면 접기' : '클릭하면 답변 입력란 펼치기');
+					if (replyCell) replyCell.setAttribute('title', isHidden ? '클릭하면 접기' : '클릭하면 답변 입력');
+				}
+			}
+
+			function renderForms(snap) {
+				allFormsDocs = snap.docs || [];
+				currentFormsPage = 1;
+				renderFormsPage();
+			}
+
+			var formsTbody = document.getElementById('forms-tbody');
+			if (formsTbody) {
+				formsTbody.addEventListener('click', function(e) {
+					var cell = e.target.closest && (e.target.closest('.admin-msg-cell') || e.target.closest('.admin-reply-cell'));
+					if (!cell) return;
+					toggleDetailRow(cell);
+				});
+				formsTbody.addEventListener('click', function(e) {
+					var btn = e.target.closest && e.target.closest('.admin-reply-save-btn');
+					if (!btn) return;
+					var cell = btn.closest('.admin-msg-detail-cell');
+					if (!cell) return;
+					var docId = cell.getAttribute('data-doc-id');
+					var textarea = cell.querySelector('.admin-reply-textarea');
+					var reply = textarea && textarea.value ? textarea.value.trim() : '';
+					if (!docId) return;
+					btn.disabled = true;
+					btn.textContent = '저장 중...';
+					formsRef.doc(docId).update({
+						adminReply: reply,
+						adminReplyAt: firebase.firestore.FieldValue.serverTimestamp()
+					}).then(function() {
+						btn.disabled = false;
+						btn.textContent = '답변 저장';
+						alert('답변이 저장되었습니다.');
+						var detailTr = cell.closest('tr');
+						if (detailTr) detailTr.style.display = 'none';
+						var dataTr = detailTr && detailTr.previousElementSibling;
+						if (dataTr) {
+							var statusEl = dataTr.querySelector('.admin-reply-status');
+							if (statusEl) {
+								statusEl.textContent = reply ? '답변됨' : '미답변';
+								statusEl.className = 'admin-reply-status ' + (reply ? 'admin-reply-status-answered' : 'admin-reply-status-pending');
+							}
+						}
+					}).catch(function(err) {
+						alert('저장에 실패했습니다.');
+						btn.disabled = false;
+						btn.textContent = '답변 저장';
+						console.warn(err);
+					});
 				});
 			}
+
 			function renderMembers(snap) {
 				var tbody = document.getElementById('members-tbody');
 				var emptyRow = document.getElementById('members-empty');
