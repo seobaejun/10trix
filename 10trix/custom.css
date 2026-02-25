@@ -135,7 +135,7 @@ body.page-footer-stick main {
 	color: #fff;
 }
 
-/* 10trix 전용: 히어로 세로 넓게 + 비디오 배경 */
+/* 10trix 전용: 히어로 세로 넓게 + 비디오 배경 (오버레이/그라데이션 없음) */
 .banner-area.banner-bg {
 	min-height: 70vh !important;
 	height: 70vh !important;
@@ -146,6 +146,8 @@ body.page-footer-stick main {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 	box-sizing: border-box;
+	background-image: none !important;
+	background-color: transparent !important;
 }
 .banner-area.banner-bg .container {
 	width: 100%;
@@ -154,6 +156,11 @@ body.page-footer-stick main {
 }
 .banner-area.banner-bg .banner-content {
 	transform: translateY(-20%);
+	/* 텍스트 뒤 살짝 어두운 배경으로 가독성 보조 */
+	padding: 0.5em 0.75em;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.45);
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 /* 히어로 타이틀: 10trix 텐트릭스는 3배, 차세대 크립토 토큰은 원래 크기, 줄간격 좁게 */
@@ -161,6 +168,14 @@ body.page-footer-stick main {
 	font-size: clamp(2rem, 10vw, 165px);
 	line-height: 1.1;
 	margin-bottom: 0;
+	/* 비디오 위에서도 잘 보이도록 텍스트 그림자 + 살짝 어두운 배경 */
+	text-shadow:
+		0 0 20px rgba(0, 0, 0, 1),
+		0 0 40px rgba(0, 0, 0, 0.9),
+		0 2px 4px rgba(0, 0, 0, 0.9),
+		0 4px 8px rgba(0, 0, 0, 0.7),
+		1px 1px 0 rgba(0, 0, 0, 0.8),
+		-1px -1px 0 rgba(0, 0, 0, 0.6);
 }
 .banner-area.banner-bg .banner-content .title .title-ko {
 	font-size: 0.88em;
@@ -170,6 +185,10 @@ body.page-footer-stick main {
 	font-size: 55px;
 	color: #fff;
 	margin-top: 0.35em;
+	text-shadow:
+		0 0 16px rgba(0, 0, 0, 1),
+		0 0 32px rgba(0, 0, 0, 0.9),
+		0 2px 4px rgba(0, 0, 0, 0.9);
 }
 @media (max-width: 768px) {
 	.banner-area.banner-bg .banner-content .title .title-sub {
@@ -201,12 +220,29 @@ body.page-footer-stick main {
 	z-index: -2;
 	pointer-events: none;
 }
+/* 메인 히어로 그라데이션/오버레이 완전 제거 (하단 검은색 그라데이션 포함) */
 .banner-area.banner-bg::before {
-	z-index: -1;
+	display: none !important;
+	content: none !important;
+	background: none !important;
+	opacity: 0 !important;
+	pointer-events: none !important;
 }
 .banner-area.banner-bg .banner-shape-wrap {
 	position: relative;
 	z-index: 0;
+}
+/* 히어로에서 작은 구체 이미지만 제거, 큰 비트코인/글로우 이미지는 유지 */
+.banner-area.banner-bg .banner-shape-wrap img.img-one {
+	display: none !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+	position: absolute !important;
+	left: -9999px !important;
+}
+/* about 섹션(히어로 밑) 작은 오버레이 이미지 제거, 큰 이미지만 유지 */
+.about-area .about-img img.img-two {
+	display: none !important;
 }
 
 /* About 섹션: 쇼핑 기능을 제공하는 토큰 플랫폼 2pt 작게, 글자색은 제목과 동일(원래대로) */
@@ -274,4 +310,20 @@ section.notice-page-hero .hero-bg-video {
 	width: 100% !important;
 	height: 100% !important;
 	object-fit: cover;
+}
+
+/* 연락처 섹션: 이메일/전화 아이콘 클릭 시 mailto·tel 연결 */
+.contact-info-wrap a.contact-info-link {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	transition: opacity 0.2s;
+}
+.contact-info-wrap a.contact-info-link:hover {
+	opacity: 0.9;
+	color: inherit;
+}
+.contact-info-wrap a.contact-info-link:focus {
+	outline: 2px solid rgba(0, 196, 244, 0.6);
+	outline-offset: 4px;
 }

@@ -21,6 +21,9 @@
         <link rel="stylesheet" href="../assets/css/responsive.css">
         <link rel="stylesheet" href="custom.css?v=10trix202602">
         <style>
+        /* 히어로 그라데이션 오버레이 제거 (테마 .banner-bg::before 덮어씀) */
+        section.banner-area.banner-bg::before { display: none !important; background: none !important; }
+        section.banner-area.banner-bg { background: transparent !important; background-image: none !important; }
         .footer-company-info { display: flex; gap: 1.5rem; flex-wrap: wrap; }
         .footer-company-info .footer-company-col { flex: 1; min-width: 140px; }
         .footer-company-info p { margin-bottom: 0.2rem; font-size: 0.8rem; line-height: 1.4; }
@@ -96,7 +99,7 @@
                                             <li id="header-mypage-li" style="display: none;"><a href="mypage.html" class="header-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link" id="header-notice-link">공지사항</a></li>
-                                            <li><a href="#contact" class="header-link" id="header-qna-link">Q&A</a></li>
+                                            <li><a href="#" class="header-link" id="header-qna-link" role="button">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -114,7 +117,7 @@
                                             <li id="mobile-mypage-li" style="display: none;"><a href="mypage.html" class="header-link mobile-menu-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link mobile-menu-link" id="mobile-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link mobile-menu-link" id="mobile-notice-link">공지사항</a></li>
-                                            <li><a href="#contact" class="header-link mobile-menu-link" id="mobile-qna-link">Q&A</a></li>
+                                            <li><a href="#" class="header-link mobile-menu-link" id="mobile-qna-link" role="button">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn mobile-menu-btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -153,7 +156,7 @@
                     disablePictureInPicture>
                 </video>
                 <div class="banner-shape-wrap">
-                    <img src="../assets/img/banner/banner_shape01.png" alt="" class="img-one">
+                    <!-- 작은 구체 이미지(banner_shape01) 제거, 큰 이미지만 유지 -->
                     <img src="../assets/img/banner/banner_shape02.png" alt="" class="img-two">
                     <img src="../assets/img/banner/banner_shape03.png" alt="" class="img-three">
                 </div>
@@ -336,7 +339,7 @@
                     <div class="contact-info-wrap">
                         <div class="row justify-content-center">
                             <div class="col-lg-4 col-sm-6">
-                                <div class="contact-info-item">
+                                <a href="mailto:xx10trix@gmail.com" class="contact-info-item contact-info-link" aria-label="이메일 보내기">
                                     <div class="icon">
                                         <span class="icon-background"></span>
                                         <i class="fas fa-envelope"></i>
@@ -344,10 +347,10 @@
                                     <div class="content">
                                         <p>xx10trix@gmail.com</p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-lg-4 col-sm-6">
-                                <div class="contact-info-item">
+                                <a href="tel:07078644518" class="contact-info-item contact-info-link" aria-label="전화 걸기">
                                     <div class="icon">
                                         <span class="icon-background"></span>
                                         <i class="fas fa-phone"></i>
@@ -355,7 +358,7 @@
                                     <div class="content">
                                         <p>10trix 공식 채널<br>070-7864-4518</p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-lg-4 col-sm-6">
                                 <div class="contact-info-item">
