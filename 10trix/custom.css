@@ -75,11 +75,21 @@
 	padding-left: 0;
 }
 .header-action > ul > li:nth-child(2)::before,
-.header-action > ul > li:nth-child(3)::before {
+.header-action > ul > li:nth-child(3)::before,
+.header-action > ul > li:nth-child(4)::before,
+.header-action > ul > li:nth-child(5)::before {
 	display: none;
 }
 .header-action > ul > li:nth-child(3) {
 	margin-left: 20px;
+	padding-left: 0;
+}
+.header-action > ul > li:nth-child(4) {
+	margin-left: 14px;
+	padding-left: 0;
+}
+.header-action > ul > li:nth-child(5) {
+	margin-left: 14px;
 	padding-left: 0;
 }
 
@@ -241,4 +251,23 @@
 }
 @media (max-width: 576px) {
 	.footer-company-info { flex-direction: column; }
+}
+
+/* 공지사항 페이지: 히어로 섹션 높이 절반(50vh) 고정 */
+section.notice-page-hero.banner-area.banner-bg {
+	height: 50vh !important;
+	min-height: 50vh !important;
+	max-height: 50vh !important;
+	padding: 30px 0 !important;
+	overflow: hidden;
+	display: flex !important;
+	align-items: center;
+}
+section.notice-page-hero .hero-bg-video {
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover;
 }

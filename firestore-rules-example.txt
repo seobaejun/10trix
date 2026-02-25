@@ -18,5 +18,10 @@ service cloud.firestore {
       allow create, read: if true;
       allow update, delete: if false;
     }
+    // 사이트별 공지사항: sites/{siteId}/notices/{docId} — 홈 공지사항 섹션 표시용
+    match /sites/{siteId}/notices/{docId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
   }
 }

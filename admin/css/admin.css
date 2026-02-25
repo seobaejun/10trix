@@ -263,6 +263,190 @@ body.admin-page {
 	word-break: break-word;
 }
 
+/* 공지사항 폼용 입력/버튼 */
+.admin-input {
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid var(--admin-border);
+	border-radius: 8px;
+	color: #fff;
+	font-size: 1rem;
+	transition: border-color 0.2s;
+}
+.admin-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.admin-input:focus {
+	outline: none;
+	border-color: var(--admin-accent);
+	box-shadow: 0 0 0 3px rgba(0, 196, 244, 0.15);
+}
+.admin-btn {
+	padding: 0.6rem 1.25rem;
+	background: var(--admin-accent);
+	border: none;
+	border-radius: 8px;
+	color: #fff;
+	font-size: 0.95rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: opacity 0.2s, background 0.2s;
+}
+.admin-btn:hover { opacity: 0.95; }
+.admin-btn-sm {
+	padding: 0.4rem 0.75rem;
+	font-size: 0.85rem;
+}
+
+/* 공지사항 입력폼: 다크 테마 프리미엄 스타일 */
+.notice-form-card {
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 196, 244, 0.1);
+	background: linear-gradient(180deg, rgba(10, 22, 40, 0.98) 0%, rgba(5, 12, 24, 0.98) 100%);
+}
+.notice-form-card .notice-form-header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.25rem 2rem;
+	background: linear-gradient(135deg, rgba(0, 196, 244, 0.25) 0%, rgba(0, 196, 244, 0.08) 50%, rgba(0, 196, 244, 0.02) 100%);
+	border-bottom: 1px solid rgba(0, 196, 244, 0.3);
+	font-size: 1.15rem;
+	font-weight: 600;
+	color: #fff;
+}
+.notice-form-header-icon {
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 196, 244, 0.25);
+	border-radius: 12px;
+	color: #00C4F4;
+	font-size: 1.35rem;
+	box-shadow: 0 4px 12px rgba(0, 196, 244, 0.2);
+}
+.notice-form-body {
+	padding: 2rem 2.5rem;
+	max-width: 720px;
+	background: rgba(0, 0, 0, 0.15);
+}
+.notice-form-group {
+	margin-bottom: 1.75rem;
+}
+.notice-form-label {
+	display: block;
+	margin-bottom: 0.6rem;
+	font-weight: 600;
+	color: #E2E8F0;
+	font-size: 0.95rem;
+	letter-spacing: -0.02em;
+}
+.notice-form-input,
+.notice-form-textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 1rem 1.25rem;
+	background: #0d1520 !important;
+	border: 1px solid rgba(255, 255, 255, 0.12) !important;
+	border-radius: 12px;
+	color: #fff !important;
+	font-size: 1rem;
+	font-family: inherit;
+	transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.notice-form-input::placeholder,
+.notice-form-textarea::placeholder {
+	color: rgba(255, 255, 255, 0.35) !important;
+}
+.notice-form-input:hover,
+.notice-form-textarea:hover {
+	border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.notice-form-input:focus,
+.notice-form-textarea:focus {
+	outline: none !important;
+	border-color: #00C4F4 !important;
+	box-shadow: 0 0 0 3px rgba(0, 196, 244, 0.25) !important;
+	background: #0f1a28 !important;
+}
+.notice-form-textarea {
+	min-height: 160px;
+	resize: vertical;
+	line-height: 1.65;
+}
+.notice-form-check-wrap {
+	margin-bottom: 2rem;
+	padding: 1rem 1.25rem;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.notice-form-check-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	cursor: pointer;
+	font-weight: 500;
+	color: #A4B4C3;
+	user-select: none;
+}
+.notice-form-checkbox {
+	width: 22px;
+	height: 22px;
+	accent-color: #00C4F4;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+.notice-form-check-text {
+	font-size: 0.95rem;
+}
+.notice-form-actions {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-top: 0.5rem;
+}
+.notice-form-btn {
+	padding: 0.9rem 2rem;
+	border-radius: 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s;
+	border: none;
+}
+.notice-form-btn-primary {
+	background: linear-gradient(135deg, #00C4F4 0%, #00a8d4 100%) !important;
+	color: #fff !important;
+	box-shadow: 0 4px 16px rgba(0, 196, 244, 0.35);
+}
+.notice-form-btn-primary:hover {
+	background: linear-gradient(135deg, #00a8d4 0%, #0090b8 100%) !important;
+	box-shadow: 0 6px 20px rgba(0, 196, 244, 0.45);
+	transform: translateY(-1px);
+}
+.notice-form-btn-secondary {
+	background: rgba(255, 255, 255, 0.06) !important;
+	color: #A4B4C3 !important;
+	border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+.notice-form-btn-secondary:hover {
+	background: rgba(255, 255, 255, 0.12) !important;
+	color: #fff !important;
+	border-color: rgba(255, 255, 255, 0.25) !important;
+}
+.notice-badge-important {
+	display: inline-block;
+	padding: 0.25rem 0.7rem;
+	background: rgba(255, 193, 7, 0.25);
+	color: #ffc107;
+	font-size: 0.8rem;
+	font-weight: 600;
+	border-radius: 6px;
+}
+
 @media (max-width: 768px) {
 	.admin-sidebar { width: 72px; padding: 0.5rem; }
 	.admin-sidebar .admin-logo-sub { display: none; }

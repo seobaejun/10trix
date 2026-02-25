@@ -129,6 +129,17 @@
                 alert('10쇼핑 가입회원은 "10쇼핑과 통합회원 동의"에 체크해 주세요.');
                 return;
             }
+            var walletEl = document.getElementById('signup-wallet-address');
+            var walletConfirmEl = document.getElementById('signup-wallet-address-confirm');
+            var walletAddress = walletEl && walletEl.value ? walletEl.value.trim() : '';
+            var walletConfirm = walletConfirmEl && walletConfirmEl.value ? walletConfirmEl.value.trim() : '';
+            if (walletAddress || walletConfirm) {
+                if (walletAddress !== walletConfirm) {
+                    alert('코인지갑 주소가 일치하지 않습니다.');
+                    return;
+                }
+            }
+            var walletToSave = walletAddress || null;
 
             var btn = signupForm.querySelector('button[type="submit"]');
             if (btn) {
@@ -141,7 +152,7 @@
                     btn.textContent = '가입하기';
                 }
             }
-            function saveUserAndClose(uid, displayName, email, type, integratedAgreed) {
+            function saveUserAndClose(uid, displayName, email, type, integratedAgreed, walletAddress) {
                 var data = {
                     displayName: displayName,
                     email: email,
@@ -152,6 +163,9 @@
                 };
                 if (integratedAgreed) {
                     data.integratedMemberAgreedAt = firebase.firestore.FieldValue.serverTimestamp();
+                }
+                if (walletAddress) {
+                    data.coinWalletAddress = walletAddress;
                 }
                 return usersRef().doc(uid).set(data, { merge: true }).then(function() {
                     if (document.getElementById('signupModal') && typeof bootstrap !== 'undefined') {
@@ -165,7 +179,7 @@
                 auth.createUserWithEmailAndPassword(email, password)
                     .then(function(cred) {
                         var uid = cred.user.uid;
-                        return saveUserAndClose(uid, name, email, 'new', false).then(function() {
+                        return saveUserAndClose(uid, name, email, 'new', false, walletToSave).then(function() {
                             alert('회원가입이 완료되었습니다.');
                         });
                     })
@@ -181,7 +195,7 @@
                 auth.signInWithEmailAndPassword(email, password)
                     .then(function(cred) {
                         var uid = cred.user.uid;
-                        return saveUserAndClose(uid, name, email, '10shopping', true).then(function() {
+                        return saveUserAndClose(uid, name, email, '10shopping', true, walletToSave).then(function() {
                             alert('10trix 회원가입이 완료되었습니다. (10쇼핑 회원 연동)');
                         });
                     })
@@ -221,13 +235,18 @@
             }).then(function() {
                 contactForm.reset();
                 alert('메시지가 전송되었습니다.');
+                var qnaModalEl = document.getElementById('qnaModal');
+                if (qnaModalEl && typeof bootstrap !== 'undefined') {
+                    var modalInstance = bootstrap.Modal.getInstance(qnaModalEl);
+                    if (modalInstance) modalInstance.hide();
+                }
             }).catch(function(err) {
                 alert('전송에 실패했습니다. 다시 시도해 주세요.');
                 console.warn(err);
             }).finally(function() {
                 if (btn) {
                     btn.disabled = false;
-                    btn.textContent = '메시지 보내기';
+                    btn.textContent = '문의 메시지 보내기';
                 }
             });
         });

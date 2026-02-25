@@ -4,7 +4,133 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>관리자 - 10trix 텐트릭스</title>
-	<link rel="stylesheet" href="css/admin.css">
+	<link rel="stylesheet" href="css/admin.css?v=2">
+	<style>
+	/* 공지사항 입력폼: 인라인 스타일 (확실 적용) */
+	#section-notices .notice-form-card {
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,196,244,0.15);
+		background: linear-gradient(180deg, #0a1628 0%, #051018 100%);
+	}
+	#section-notices .notice-form-header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.25rem 2rem;
+		background: linear-gradient(135deg, rgba(0,196,244,0.28) 0%, rgba(0,196,244,0.08) 100%);
+		border-bottom: 1px solid rgba(0,196,244,0.3);
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: #fff;
+	}
+	#section-notices .notice-form-header-icon {
+		width: 48px;
+		height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0,196,244,0.3);
+		border-radius: 12px;
+		color: #00C4F4;
+		font-size: 1.35rem;
+		box-shadow: 0 4px 12px rgba(0,196,244,0.25);
+	}
+	#section-notices .notice-form-body {
+		padding: 2rem 2.5rem;
+		max-width: 720px;
+		background: rgba(0,0,0,0.2);
+	}
+	#section-notices .notice-form-label {
+		display: block;
+		margin-bottom: 0.6rem;
+		font-weight: 600;
+		color: #E2E8F0;
+		font-size: 0.95rem;
+	}
+	#section-notices #notice-title,
+	#section-notices #notice-content {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 1rem 1.25rem;
+		background: #0d1520 !important;
+		border: 1px solid rgba(255,255,255,0.15) !important;
+		border-radius: 12px;
+		color: #fff !important;
+		font-size: 1rem;
+		font-family: inherit;
+	}
+	#section-notices #notice-title::placeholder,
+	#section-notices #notice-content::placeholder {
+		color: rgba(255,255,255,0.4) !important;
+	}
+	#section-notices #notice-title:focus,
+	#section-notices #notice-content:focus {
+		outline: none !important;
+		border-color: #00C4F4 !important;
+		box-shadow: 0 0 0 3px rgba(0,196,244,0.3) !important;
+	}
+	#section-notices #notice-content {
+		min-height: 160px;
+		resize: vertical;
+		line-height: 1.65;
+	}
+	#section-notices .notice-form-check-wrap {
+		margin-bottom: 2rem;
+		padding: 1rem 1.25rem;
+		background: rgba(0,0,0,0.25);
+		border-radius: 12px;
+		border: 1px solid rgba(255,255,255,0.1);
+	}
+	#section-notices .notice-form-check-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		cursor: pointer;
+		color: #A4B4C3;
+		font-weight: 500;
+	}
+	#section-notices #notice-important {
+		width: 22px;
+		height: 22px;
+		accent-color: #00C4F4;
+		cursor: pointer;
+	}
+	#section-notices .notice-form-actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	#section-notices #notice-submit-btn {
+		padding: 0.9rem 2rem;
+		border-radius: 12px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		border: none;
+		background: linear-gradient(135deg, #00C4F4 0%, #00a8d4 100%) !important;
+		color: #fff !important;
+		box-shadow: 0 4px 16px rgba(0,196,244,0.35);
+	}
+	#section-notices #notice-submit-btn:hover {
+		background: linear-gradient(135deg, #00a8d4 0%, #0090b8 100%) !important;
+		box-shadow: 0 6px 20px rgba(0,196,244,0.45);
+	}
+	#section-notices #notice-cancel-btn {
+		padding: 0.9rem 2rem;
+		border-radius: 12px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		background: rgba(255,255,255,0.08) !important;
+		color: #A4B4C3 !important;
+		border: 1px solid rgba(255,255,255,0.2) !important;
+	}
+	#section-notices #notice-cancel-btn:hover {
+		background: rgba(255,255,255,0.15) !important;
+		color: #fff !important;
+	}
+	</style>
 </head>
 <body class="admin-page">
 	<div id="admin-gate" class="admin-gate">
@@ -24,6 +150,7 @@
 			<a href="#dashboard" class="admin-nav active" data-section="dashboard">대시보드</a>
 			<a href="#members" class="admin-nav" data-section="members">회원정보</a>
 			<a href="#forms" class="admin-nav" data-section="forms">입력폼 내용</a>
+			<a href="#notices" class="admin-nav" data-section="notices">공지사항</a>
 		</nav>
 		<a href="/10trix/" class="admin-sidebar-home">홈으로 가기</a>
 	</aside>
@@ -86,6 +213,55 @@
 					</thead>
 					<tbody id="forms-tbody">
 						<tr><td colspan="5" class="empty" id="forms-empty">불러오는 중...</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- 공지사항 -->
+		<section id="section-notices" class="admin-section">
+			<h1>공지사항</h1>
+			<div class="admin-card notice-form-card">
+				<div class="admin-card-header notice-form-header">
+					<span class="notice-form-header-icon"><i class="fas fa-bullhorn"></i></span>
+					<span>공지 등록 / 수정</span>
+				</div>
+				<div class="notice-form-body">
+					<input type="hidden" id="notice-edit-id" value="">
+					<div class="notice-form-group">
+						<label for="notice-title" class="notice-form-label">제목</label>
+						<input type="text" id="notice-title" class="notice-form-input" placeholder="공지 제목을 입력하세요" maxlength="200">
+					</div>
+					<div class="notice-form-group">
+						<label for="notice-content" class="notice-form-label">내용</label>
+						<textarea id="notice-content" class="notice-form-textarea" placeholder="공지 내용을 입력하세요" rows="6"></textarea>
+					</div>
+					<div class="notice-form-group notice-form-check-wrap">
+						<label class="notice-form-check-label">
+							<input type="checkbox" id="notice-important" class="notice-form-checkbox">
+							<span class="notice-form-check-text">중요 공지 (체크 시 항상 상단 노출)</span>
+						</label>
+					</div>
+					<div class="notice-form-actions">
+						<button type="button" id="notice-submit-btn" class="notice-form-btn notice-form-btn-primary">등록</button>
+						<button type="button" id="notice-cancel-btn" class="notice-form-btn notice-form-btn-secondary">취소</button>
+					</div>
+				</div>
+			</div>
+			<div class="admin-card">
+				<div class="admin-card-header">공지 목록</div>
+				<table class="admin-table">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>중요</th>
+							<th>등록일</th>
+							<th>관리</th>
+						</tr>
+					</thead>
+					<tbody id="notices-tbody">
+						<tr id="notices-empty-row"><td colspan="5" class="empty" id="notices-empty">불러오는 중...</td></tr>
 					</tbody>
 				</table>
 			</div>
@@ -265,6 +441,134 @@
 		} catch (e) {
 			document.getElementById('forms-empty').textContent = 'Firebase 연동 오류.';
 			if (document.getElementById('members-empty')) document.getElementById('members-empty').textContent = 'Firebase 연동 오류.';
+			console.warn(e);
+		}
+	})();
+	</script>
+	<script>
+	(function() {
+		var config = typeof window.FIREBASE_CONFIG !== 'undefined' ? window.FIREBASE_CONFIG : null;
+		if (!config || !config.apiKey || config.apiKey.indexOf('YOUR_') === 0) {
+			var emptyEl = document.getElementById('notices-empty');
+			if (emptyEl) emptyEl.textContent = 'Firebase 설정 후 공지 목록이 표시됩니다.';
+			return;
+		}
+		try {
+			var db = firebase.firestore();
+			var noticesRef = db.collection('sites').doc('10trix').collection('notices');
+			var tbody = document.getElementById('notices-tbody');
+			var titleInput = document.getElementById('notice-title');
+			var contentInput = document.getElementById('notice-content');
+			var importantInput = document.getElementById('notice-important');
+			var editIdInput = document.getElementById('notice-edit-id');
+			var submitBtn = document.getElementById('notice-submit-btn');
+			var cancelBtn = document.getElementById('notice-cancel-btn');
+
+			function escapeHtml(s) { return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+			var emptyTr = document.getElementById('notices-empty-row');
+			var emptyTd = document.getElementById('notices-empty');
+
+			function loadNotices() {
+				noticesRef.get().then(function(snap) {
+					var docs = snap.docs;
+					docs.sort(function(a, b) {
+						var da = a.data(), db = b.data();
+						var impA = da.important === true ? 1 : 0;
+						var impB = db.important === true ? 1 : 0;
+						if (impB !== impA) return impB - impA;
+						var tA = da.createdAt && da.createdAt.toDate ? da.createdAt.toDate().getTime() : 0;
+						var tB = db.createdAt && db.createdAt.toDate ? db.createdAt.toDate().getTime() : 0;
+						return tB - tA;
+					});
+					var dataRows = tbody.querySelectorAll('tr:not(#notices-empty-row)');
+					dataRows.forEach(function(r) { tbody.removeChild(r); });
+					if (docs.length === 0) {
+						if (emptyTr) emptyTr.style.display = '';
+						if (emptyTd) emptyTd.textContent = '등록된 공지가 없습니다.';
+						return;
+					}
+					if (emptyTr) emptyTr.style.display = 'none';
+					docs.forEach(function(doc, i) {
+						var d = doc.data();
+						var dateStr = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString('ko-KR') : '-';
+						var importantBadge = d.important ? '<span class="notice-badge-important">중요</span>' : '-';
+						var tr = document.createElement('tr');
+						tr.innerHTML = '<td>' + (docs.length - i) + '</td><td>' + escapeHtml(d.title || '-') + '</td><td>' + importantBadge + '</td><td>' + dateStr + '</td><td><button type="button" class="admin-btn admin-btn-sm notice-edit-btn" data-id="' + escapeHtml(doc.id) + '">수정</button> <button type="button" class="admin-btn admin-btn-sm notice-del-btn" data-id="' + escapeHtml(doc.id) + '" style="background:#c44;">삭제</button></td>';
+						tbody.insertBefore(tr, emptyTr);
+					});
+					tbody.querySelectorAll('.notice-edit-btn').forEach(function(btn) {
+						btn.addEventListener('click', function() {
+							var id = btn.getAttribute('data-id');
+							noticesRef.doc(id).get().then(function(docSnap) {
+								if (!docSnap.exists) return;
+								var d = docSnap.data();
+								if (titleInput) titleInput.value = d.title || '';
+								if (contentInput) contentInput.value = d.content || '';
+								if (importantInput) importantInput.checked = d.important === true;
+								if (editIdInput) editIdInput.value = id;
+								if (submitBtn) submitBtn.textContent = '수정';
+							});
+						});
+					});
+					tbody.querySelectorAll('.notice-del-btn').forEach(function(btn) {
+						btn.addEventListener('click', function() {
+							if (!confirm('이 공지를 삭제할까요?')) return;
+							var id = btn.getAttribute('data-id');
+							noticesRef.doc(id).delete().then(function() { loadNotices(); }).catch(function(err) {
+								alert('삭제에 실패했습니다.');
+								console.warn(err);
+							});
+						});
+					});
+				}).catch(function(err) {
+					if (emptyTd) emptyTd.textContent = '공지 목록을 불러오지 못했습니다.';
+					if (emptyTr) emptyTr.style.display = '';
+					console.warn(err);
+				});
+			}
+
+			if (submitBtn) {
+				submitBtn.addEventListener('click', function() {
+					var title = titleInput ? titleInput.value.trim() : '';
+					var content = contentInput ? contentInput.value.trim() : '';
+					if (!title) { alert('제목을 입력하세요.'); return; }
+					var important = importantInput ? importantInput.checked : false;
+					var id = editIdInput ? editIdInput.value.trim() : '';
+					if (id) {
+						noticesRef.doc(id).update({ title: title, content: content, important: important, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
+							alert('수정되었습니다.');
+							if (editIdInput) editIdInput.value = '';
+							if (titleInput) titleInput.value = '';
+							if (contentInput) contentInput.value = '';
+							if (importantInput) importantInput.checked = false;
+							if (submitBtn) submitBtn.textContent = '등록';
+							loadNotices();
+						}).catch(function(err) { alert('수정에 실패했습니다.'); console.warn(err); });
+					} else {
+						noticesRef.add({ title: title, content: content, important: important, createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(function() {
+							alert('등록되었습니다.');
+							if (titleInput) titleInput.value = '';
+							if (contentInput) contentInput.value = '';
+							if (importantInput) importantInput.checked = false;
+							loadNotices();
+						}).catch(function(err) { alert('등록에 실패했습니다.'); console.warn(err); });
+					}
+				});
+			}
+			if (cancelBtn) {
+				cancelBtn.addEventListener('click', function() {
+					if (editIdInput) editIdInput.value = '';
+					if (titleInput) titleInput.value = '';
+					if (contentInput) contentInput.value = '';
+					if (importantInput) importantInput.checked = false;
+					if (submitBtn) submitBtn.textContent = '등록';
+				});
+			}
+
+			loadNotices();
+		} catch (e) {
+			if (document.getElementById('notices-empty')) document.getElementById('notices-empty').textContent = 'Firebase 연동 오류.';
 			console.warn(e);
 		}
 	})();
