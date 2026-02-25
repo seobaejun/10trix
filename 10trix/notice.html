@@ -60,6 +60,16 @@
         /* 헤더/푸터 공통 (메인과 동일 스타일) */
         #header .header-action .header-link { color: #A4B4C3; text-decoration: none; font-size: 15px; padding: 0; background: none; border: none; }
         #header .header-action .header-link:hover { color: #00C4F4; }
+        /* Q&A/로그인 모달 입력폼 (메인과 동일) */
+        .auth-modal .modal-content { background: #0a1628 !important; color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .auth-modal .modal-header { border-color: rgba(255,255,255,0.1); }
+        .auth-modal .form-control { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); color: #fff; }
+        .auth-modal .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .auth-modal .form-control:focus { background: rgba(0,0,0,0.4); border-color: #00C4F4; color: #fff; box-shadow: 0 0 0 0.2rem rgba(0,196,244,0.25); }
+        .auth-modal .form-label { color: #A4B4C3; }
+        .auth-modal .btn-primary { background: #00C4F4; border-color: #00C4F4; }
+        .auth-modal .btn-primary:hover { background: #00a8d4; border-color: #00a8d4; }
+        .auth-modal .form-check-label { color: #A4B4C3; }
         .footer-company-info { display: flex; gap: 1.5rem; flex-wrap: wrap; }
         .footer-company-info .footer-company-col { flex: 1; min-width: 140px; }
         .footer-company-info p { margin-bottom: 0.2rem; font-size: 0.8rem; line-height: 1.4; }
@@ -136,7 +146,7 @@
                                             <li id="header-mypage-li" style="display: none;"><a href="mypage.html" class="header-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link" id="header-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link" id="header-notice-link">공지사항</a></li>
-                                            <li><a href="index.html#contact" class="header-link" id="header-qna-link">Q&A</a></li>
+                                            <li><a href="#" class="header-link" id="header-qna-link" role="button">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -152,7 +162,7 @@
                                             <li id="mobile-mypage-li" style="display: none;"><a href="mypage.html" class="header-link mobile-menu-link">마이페이지</a></li>
                                             <li><a href="#" class="header-link mobile-menu-link" id="mobile-auth-link">로그인</a></li>
                                             <li><a href="notice.html" class="header-link mobile-menu-link" id="mobile-notice-link">공지사항</a></li>
-                                            <li><a href="index.html#contact" class="header-link mobile-menu-link" id="mobile-qna-link">Q&A</a></li>
+                                            <li><a href="#" class="header-link mobile-menu-link" id="mobile-qna-link" role="button">Q&A</a></li>
                                             <li class="header-btn"><a href="#" class="btn mobile-menu-btn">Buy 10TRX</a></li>
                                         </ul>
                                     </div>
@@ -220,6 +230,60 @@
                 </div>
             </div>
         </main>
+
+        <!-- Q&A 문의 모달 (공지사항 페이지에서도 클릭 시 열림) -->
+        <div class="modal fade auth-modal" id="qnaModal" tabindex="-1" aria-labelledby="qnaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qnaModalLabel">Q&A 문의하기</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="contact-form" action="#">
+                            <div class="mb-3">
+                                <label for="contact-name" class="form-label">이름</label>
+                                <input type="text" class="form-control" id="contact-name" name="name" placeholder="이름" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact-title" class="form-label">제목</label>
+                                <input type="text" class="form-control" id="contact-title" name="title" placeholder="문의 제목" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact-message" class="form-label">내용</label>
+                                <textarea class="form-control" id="contact-message" name="message" placeholder="문의 내용을 입력하세요" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" id="contact-submit-btn">문의 보내기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 로그인 모달 (비로그인 시 Q&A 클릭 시 열림) -->
+        <div class="modal fade auth-modal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">로그인</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="login-form">
+                            <div class="mb-3">
+                                <label for="login-email" class="form-label">이메일</label>
+                                <input type="email" class="form-control" id="login-email" placeholder="example@email.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="login-password" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="login-password" placeholder="비밀번호" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">로그인</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- footer-area (메인과 동일) -->
         <footer>
