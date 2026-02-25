@@ -38,6 +38,10 @@
         if (link) link.textContent = user ? '로그아웃' : '로그인';
         var signupLi = document.getElementById('header-signup-li');
         if (signupLi) signupLi.style.display = user ? 'none' : '';
+        var mobileLink = document.getElementById('mobile-auth-link');
+        if (mobileLink) mobileLink.textContent = user ? '로그아웃' : '로그인';
+        var mobileSignupLi = document.getElementById('mobile-signup-li');
+        if (mobileSignupLi) mobileSignupLi.style.display = user ? 'none' : '';
     }
 
     auth.onAuthStateChanged(function(user) {
@@ -45,24 +49,25 @@
     });
 
     var link = document.getElementById('header-auth-link');
+    var mobileAuthLink = document.getElementById('mobile-auth-link');
     var loginModalEl = document.getElementById('loginModal');
 
-    if (link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (auth.currentUser) {
-                auth.signOut().then(function() {
-                    updateHeaderUI(null);
-                }).catch(function(err) {
-                    alert('로그아웃 중 오류: ' + (err.message || err));
-                });
-            } else {
-                if (typeof bootstrap !== 'undefined' && loginModalEl) {
-                    bootstrap.Modal.getOrCreateInstance(loginModalEl).show();
-                }
+    function handleAuthClick(e) {
+        e.preventDefault();
+        if (auth.currentUser) {
+            auth.signOut().then(function() {
+                updateHeaderUI(null);
+            }).catch(function(err) {
+                alert('로그아웃 중 오류: ' + (err.message || err));
+            });
+        } else {
+            if (typeof bootstrap !== 'undefined' && loginModalEl) {
+                bootstrap.Modal.getOrCreateInstance(loginModalEl).show();
             }
-        });
+        }
     }
+    if (link) link.addEventListener('click', handleAuthClick);
+    if (mobileAuthLink) mobileAuthLink.addEventListener('click', handleAuthClick);
 
     var loginForm = document.getElementById('login-form');
     if (loginForm) {

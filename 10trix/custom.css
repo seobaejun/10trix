@@ -83,6 +83,44 @@
 	padding-left: 0;
 }
 
+/* 모바일 메뉴: 회원가입·로그인·Buy 10TRX (로고 아래, PC와 동일하게) */
+.mobile-menu .mobile-menu-action {
+	display: block !important;
+	visibility: visible !important;
+	padding: 16px 25px 20px;
+	border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu-action ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex !important;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 20px;
+}
+.mobile-menu-action .header-link {
+	color: #A4B4C3;
+	text-decoration: none;
+	font-size: 15px;
+}
+.mobile-menu-action .header-link:hover {
+	color: #00C4F4;
+}
+.mobile-menu-action .mobile-menu-btn {
+	font-size: 13px;
+	padding: 10px 20px;
+	border: 1px solid #00C4F4;
+	color: #fff;
+	background: transparent;
+	text-decoration: none;
+	border-radius: 5px;
+}
+.mobile-menu-action .mobile-menu-btn:hover {
+	background: #00C4F4;
+	color: #fff;
+}
+
 /* 10trix 전용: 히어로 절반 높이 + 비디오 배경 최적화 */
 .banner-area.banner-bg {
 	min-height: 50vh;
