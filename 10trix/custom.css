@@ -291,8 +291,8 @@ body.page-footer-stick main {
 }
 @media (max-width: 576px) {
 	.footer-company-info { flex-direction: column; }
-	.footer-bottom .footer-menu ul { justify-content: center; margin-top: 8px; }
-	.footer-bottom .row.align-items-center { flex-direction: column; text-align: center; }
+	.footer-bottom .footer-menu ul { justify-content: center; margin-bottom: 10px; }
+	.footer-bottom .row.align-items-center { flex-direction: column-reverse; text-align: center; }
 	.footer-bottom .copyright-text { margin-bottom: 0; }
 }
 
