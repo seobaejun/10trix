@@ -291,6 +291,9 @@ body.page-footer-stick main {
 }
 @media (max-width: 576px) {
 	.footer-company-info { flex-direction: column; }
+	.footer-bottom .footer-menu ul { justify-content: center; margin-top: 8px; }
+	.footer-bottom .row.align-items-center { flex-direction: column; text-align: center; }
+	.footer-bottom .copyright-text { margin-bottom: 0; }
 }
 
 /* 공지사항 페이지: 히어로 섹션 높이 절반(50vh) 고정 */
